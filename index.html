@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artlistprint.ru — Авторские печатные материалы и раскраски</title>
+    
+    <!-- Подключаем шрифты: Comfortaa (основной), Caveat, Nunito (для кнопок и подписей) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ✒️ ПОДКТЮЧЕНИЕ MAGNOLIA SCRIPT С КОМПЬЮТЕРА / ИЗ ПАПКИ FONTS */
+        @font-face {
+            font-family: 'Magnolia Script';
+            src: url('fonts/Magnolia.ttf') format('truetype'),
+                 url('fonts/MagnoliaScript.ttf') format('truetype'),
+                 url('fonts/Magnolia.otf') format('opentype'),
+                 url('Magnolia.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* 🌿 МЯГКАЯ ПРИРОДНАЯ ПАЛИТРА */
+        :root {
+            --bg-paper: #f8f5ee;
+            --primary-sage: #486a47; /* Шалфейно-зеленый */
+            --primary-sage-hover: #365235;
+            --accent-terracotta: #cc6244; /* Терракотовый */
+            --accent-yellow: #f0c543;
+            --text-main: #333d32;
+            --text-muted: #6b756a;
+            --card-bg: #ffffff;
+            --border-soft: #e5dfd3;
+            --shadow-soft: 0 8px 24px rgba(72, 106, 71, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comfortaa', cursive, sans-serif;
+            background-color: var(--bg-paper);
+            background-image: 
+                radial-gradient(#ded7c8 0.8px, transparent 0.8px),
+                radial-gradient(#ded7c8 0.8px, var(--bg-paper) 0.8px);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1380px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* 🌼 ШАПКА C РОМАШКАМИ */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 48px 20px 36px;
+            background-color: rgba(255, 255, 255, 0.85);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23486a47' stroke-width='1.2' opacity='0.25'%3E%3Cpath d='M20,12 C20,8 18,5 15,8 C12,5 10,8 10,12 C7,10 4,12 7,15 C4,18 7,20 10,20 C10,24 12,27 15,24 C18,27 20,24 20,20 C23,20 26,18 23,15 C26,12 23,10 20,12 Z'/%3E%3Ccircle cx='15' cy='16' r='3.5' fill='%23f0c543' stroke='none' opacity='0.7'/%3E%3C/g%3E%3Ccircle cx='55' cy='55' r='2' fill='%23f0c543' opacity='0.5'/%3E%3Ccircle cx='65' cy='20' r='1.5' fill='%23486a47' opacity='0.3'/%3E%3C/svg%3E");
+            border-bottom: 2px dashed var(--border-soft);
+            margin-bottom: 35px;
+            border-radius: 0 0 25px 25px;
+        }
+
+        /* НАЗВАНИЕ MAGNOLIA SCRIPT */
+        .site-title {
+            font-family: 'Magnolia Script', 'Caveat', cursive;
+            font-size: 4.2rem;
+            font-weight: normal;
+            line-height: 1.25;
+            margin-bottom: 8px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .title-artlist {
+            color: var(--primary-sage);
+        }
+
+        .title-print {
+            color: var(--accent-terracotta);
+        }
+
+        .title-domain {
+            font-size: 2.2rem;
+            color: var(--text-muted);
+            font-family: 'Comfortaa', sans-serif;
+            font-weight: 400;
+        }
+
+        .site-subtitle {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        /* 📐 СТРУКТУРА МАКЕТА */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 230px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* 🍃 БОКОВОЕ МЕНЮ */
+        .sidebar {
+            background: var(--card-bg);
+            padding: 22px 16px;
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-sage);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .daisy-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-align: left;
+            padding: 9px 12px;
+            margin-bottom: 4px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(72, 106, 71, 0.08);
+            color: var(--primary-sage);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-sage);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* 🖼️ КАТАЛОГ КАРТОЧЕК */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(72, 106, 71, 0.12);
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 130%;
+            background-color: #f3efe6;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.03);
+        }
+
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Плашка категории */
+        .card-category {
+            display: inline-block;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.72rem;
+            background-color: #eaf1e9;
+            color: var(--primary-sage);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            align-self: flex-start;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+
+        /* 📥 КНОПКИ С АКЦЕНТОМ НА PDF */
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-pdf {
+            flex: 1.2;
+            background-color: var(--primary-sage);
+            color: #ffffff;
+        }
+
+        .btn-pdf:hover {
+            background-color: var(--primary-sage-hover);
+        }
+
+        .btn-jpg {
+            flex: 0.8;
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-soft);
+            opacity: 0.85;
+        }
+
+        .btn-jpg:hover {
+            background-color: #f3efe6;
+            opacity: 1;
+        }
+
+        /* ПОДВАЛ */
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px dashed var(--border-soft);
+            padding-top: 30px;
+        }
+
+        footer a {
+            color: var(--primary-sage);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 6px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 1100px) {
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 850px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+            .site-title { font-size: 3.2rem; }
+            .title-domain { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 550px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌼 ШАПКА САЙТА -->
+    <header>
+        <div class="container">
+            <a href="/" style="text-decoration: none;">
+                <h1 class="site-title">
+                    <span class="title-artlist">artlist</span><span class="title-print">print</span><span class="title-domain">.ru</span>
+                </h1>
+            </a>
+            <p class="site-subtitle">Авторские печатные материалы для детского развития, творчества и медитативного отдыха. Скачивайте в один клик в формате A4.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            
+            <!-- 🍃 БОКОВОЕ МЕНЮ -->
+            <aside class="sidebar">
+                
+                <div class="filter-group" id="category-filters">
+                    <div class="filter-title">
+                        <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                        </svg>
+                        Разделы
+                    </div>
+                    <button class="filter-btn active" onclick="filterItems('cat', 'all', this)">Все материалы</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'kids', this)">Детские раскраски</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'antistress', this)">Антистресс</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'mazes', this)">Лабиринты</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'fillwords', this)">Филлворды</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'dots', this)">По точкам</button>
+                </div>
+
+                <div class="filter-group" id="age-filters">
+                    <div class="filter-title">
+                        <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                        </svg>
+                        Возраст
+                    </div>
+                    <button class="filter-btn" onclick="filterItems('age', '2-5', this)">2–5 лет</button>
+                    <button class="filter-btn" onclick="filterItems('age', '6-9', this)">6–9 лет</button>
+                    <button class="filter-btn" onclick="filterItems('age', 'adult', this)">10+ / Взрослые</button>
+                </div>
+
+            </aside>
+
+            <!-- 🖼️ КАТАЛОГ -->
+            <main class="cards-grid">
+
+                <!-- 1. Корова -->
+                <div class="card" data-category="kids" data-age="2-5">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/cow.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <h3 class="card-title">Корова</h3>
+                        <p class="card-desc">Простая милая раскраска с крупными детализированными контурами.</p>
+                        <div class="card-actions">
+                            <a href="pdf/cow.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/cow.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Лошадка -->
+                <div class="card" data-category="kids" data-age="2-5">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/horse.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <h3 class="card-title">Лошадка</h3>
+                        <p class="card-desc">Доброе животное с четкими линиями для самых маленьких.</p>
+                        <div class="card-actions">
+                            <a href="pdf/horse.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/horse.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Петух -->
+                <div class="card" data-category="kids" data-age="2-5">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/rooster.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <h3 class="card-title">Петух</h3>
+                        <p class="card-desc">Яркий персонаж для первого опыта раскрашивания карандашами.</p>
+                        <div class="card-actions">
+                            <a href="pdf/rooster.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/rooster.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Лабиринт Ёлочка -->
+                <div class="card" data-category="mazes" data-age="6-9">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/maze-tree.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Лабиринт • 6–9 лет</span>
+                        <h3 class="card-title">Ёлочка</h3>
+                        <p class="card-desc">Увлекательное задание на внимательность: найди путь от точки А к Б.</p>
+                        <div class="card-actions">
+                            <a href="pdf/maze-tree.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/maze-tree.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Филлворд Космос -->
+                <div class="card" data-category="fillwords" data-age="6-9">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/fillword-cosmos.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Филлворд • 6–9 лет</span>
+                        <h3 class="card-title">Космос</h3>
+                        <p class="card-desc">Поиск 9 космических слов в буквенной сетке с готовым ключом-ответом.</p>
+                        <div class="card-actions">
+                            <a href="pdf/fillword-cosmos.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/fillword-cosmos.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. По точкам Жираф -->
+                <div class="card" data-category="dots" data-age="2-5">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/dots-giraffe.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">По точкам • 2–5 лет</span>
+                        <h3 class="card-title">Жираф</h3>
+                        <p class="card-desc">Соедини точки от 1 до 39 и узнай, кто спрятался на рисунке.</p>
+                        <div class="card-actions">
+                            <a href="pdf/dots-giraffe.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/dots-giraffe.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. По точкам Щенок -->
+                <div class="card" data-category="dots" data-age="2-5">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/dots-puppy.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">По точкам • 2–5 лет</span>
+                        <h3 class="card-title">Щенок</h3>
+                        <p class="card-desc">Соедини последовательно точки от 1 до 40 и нарисуй дружелюбного щенка.</p>
+                        <div class="card-actions">
+                            <a href="pdf/dots-puppy.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/dots-puppy.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Пионы (Антистресс) -->
+                <div class="card" data-category="antistress" data-age="adult">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/pions.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Антистресс • 10+ лет</span>
+                        <h3 class="card-title">Пионы</h3>
+                        <p class="card-desc">Сложная эстетичная композиция с пышными пионами и пшеничными колосьями.</p>
+                        <div class="card-actions">
+                            <a href="pdf/pions.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/pions.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Полевые цветы (Антистресс) -->
+                <div class="card" data-category="antistress" data-age="adult">
+                    <div class="card-image-wrapper">
+                        <div class="card-image" style="background-image: url('preview/wildflowers.jpg');"></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">Антистресс • 10+ лет</span>
+                        <h3 class="card-title">Полевые цветы и бабочки</h3>
+                        <p class="card-desc">Детализированный природный узор для творческой медитации и расслабления.</p>
+                        <div class="card-actions">
+                            <a href="pdf/wildflowers.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="preview/wildflowers.jpg" class="btn btn-jpg" download>JPG</a>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+        </div>
+
+        <footer>
+            <p>
+                <a href="privacy.html">Политика конфиденциальности</a> | 
+                <a href="terms.html">Условия использования</a>
+            </p>
+            <p style="margin-top: 8px;">© 2026 artlistprint.ru. Все материалы предназначены для бесплатной распечатки.</p>
+        </footer>
+    </div>
+
+    <script>
+        function filterItems(type, value, element) {
+            const group = element.closest('.filter-group');
+            group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            const otherGroupId = group.id === 'category-filters' ? 'age-filters' : 'category-filters';
+            const otherGroup = document.getElementById(otherGroupId);
+            otherGroup.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                const age = card.getAttribute('data-age');
+
+                if (type === 'cat') {
+                    if (value === 'all' || cat === value) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else if (type === 'age') {
+                    if (age === value) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
