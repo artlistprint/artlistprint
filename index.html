@@ -635,56 +635,113 @@
         <img class="modal-content" id="modal-img" alt="Предпросмотр">
     </div>
 
-    <script>
-        let selectedCategory = 'all';
-        let selectedAge = 'all';
+   <script>
+    let selectedCategory = 'all';
+    let selectedAge = 'all';
 
-        function filterItems(type, value, element) {
-            const group = element.closest('.filter-group');
+    function filterItems(type, value, element) {
+        const group = element.closest('.filter-group');
+        const isAlreadyActive = element.classList.contains('active');
+
+        // Если кликнули по уже активной кнопке (и это не "all"), снимаем выделение и возвращаем "all"
+        if (isAlreadyActive && value !== 'all') {
+            element.classList.remove('active');
+            const allBtn = group.querySelector('[onclick*="\'all\'"]');
+            if (allBtn) allBtn.classList.add('active');
+
+            if (type === 'cat') selectedCategory = 'all';
+            if (type === 'age') selectedAge = 'all';
+        } else {
+            // Обычный выбор фильтра
             group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
 
             if (type === 'cat') selectedCategory = value;
             if (type === 'age') selectedAge = value;
-
-            applyFilters();
         }
 
-        function applyFilters() {
-            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.card');
+        applyFilters();
+    }
 
-            cards.forEach(card => {
-                const cat = card.getAttribute('data-category');
-                const age = card.getAttribute('data-age');
-                const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-                const title = card.querySelector('.card-title').innerText.toLowerCase();
-                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+    function resetAllFilters() {
+        selectedCategory = 'all';
+        selectedAge = 'all';
+        document.getElementById('search-input').value = '';
 
-                const matchCategory = (selectedCategory === 'all' || cat === selectedCategory);
-                const matchAge = (selectedAge === 'all' || age === selectedAge);
+        // Возвращаем подсветку на кнопки "Все"
+        document.querySelectorAll('.filter-group').forEach(group => {
+            group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            const allBtn = group.querySelector('[onclick*="\'all\'"]');
+            if (allBtn) allBtn.classList.add('active');
+        });
 
-                const fullContent = title + ' ' + desc + ' ' + tags;
-                const matchSearch = searchQuery === '' || fullContent.includes(searchQuery);
+        applyFilters();
+    }
 
-                if (matchCategory && matchAge && matchSearch) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+    function applyFilters() {
+        const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.card');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            const age = card.getAttribute('data-age');
+            const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+            const title = card.querySelector('.card-title').innerText.toLowerCase();
+            const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+
+            const matchCategory = (selectedCategory === 'all' || cat === selectedCategory);
+            const matchAge = (selectedAge === 'all' || age === selectedAge);
+
+            const fullContent = title + ' ' + desc + ' ' + tags;
+            const matchSearch = searchQuery === '' || fullContent.includes(searchQuery);
+
+            if (matchCategory && matchAge && matchSearch) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Показываем сообщение, если ничего не найдено
+        let noResultsMsg = document.getElementById('no-results-msg');
+        if (visibleCount === 0) {
+            if (!noResultsMsg) {
+                noResultsMsg = document.createElement('div');
+                noResultsMsg.id = 'no-results-msg';
+                noResultsMsg.style.cssText = `
+                    grid-column: 1 / -1;
+                    text-align: center;
+                    padding: 50px 20px;
+                    background: #ffffff;
+                    border-radius: 18px;
+                    border: 1px solid var(--border-soft);
+                    box-shadow: var(--shadow-soft);
+                `;
+                document.querySelector('.cards-grid').appendChild(noResultsMsg);
+            }
+            noResultsMsg.innerHTML = `
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">К сожалению, ничего не найдено 🌼</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Попробуйте выбрать другой раздел или сбросить фильтры.</p>
+                <button class="btn btn-pdf" style="display: inline-flex; padding: 10px 20px;" onclick="resetAllFilters()">Сбросить фильтры</button>
+            `;
+            noResultsMsg.style.display = 'block';
+        } else if (noResultsMsg) {
+            noResultsMsg.style.display = 'none';
         }
+    }
 
-        function openModal(imgSrc) {
-            const modal = document.getElementById('image-modal');
-            const modalImg = document.getElementById('modal-img');
-            modalImg.src = imgSrc;
-            modal.style.display = 'flex';
-        }
+    function openModal(imgSrc) {
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        modalImg.src = imgSrc;
+        modal.style.display = 'flex';
+    }
 
-        function closeModal() {
-            document.getElementById('image-modal').style.display = 'none';
-        }
-    </script>
+    function closeModal() {
+        document.getElementById('image-modal').style.display = 'none';
+    }
+</script>
 </body>
 </html>
