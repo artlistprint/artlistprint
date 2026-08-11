@@ -219,11 +219,10 @@
             box-shadow: 0 12px 28px rgba(72, 106, 71, 0.12);
         }
 
-        /* ФИКС: Картинка не обрезается и имеет рамку */
         .card-image-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 135%; /* Пропорция под A4 */
+            padding-top: 135%;
             background-color: #f3efe6;
             overflow: hidden;
             border-bottom: 1px solid var(--border-soft);
@@ -231,7 +230,7 @@
         }
 
         .card-image-wrapper::after {
-            content: '🔍 Нажмите для просмотра';
+            content: '🔍 Увеличить';
             position: absolute;
             bottom: 8px;
             right: 8px;
@@ -257,7 +256,7 @@
             left: 10px;
             right: 10px;
             bottom: 10px;
-            background-size: contain; /* Картинка вмещается целиком! */
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             transition: transform 0.3s ease;
@@ -335,7 +334,7 @@
 
         .btn-jpg:hover { background-color: #f3efe6; opacity: 1; }
 
-        /* 🔍 МОДАЛЬНОЕ ОКНО УВЕЛИЧЕННОГО ПРОСМОТРА */
+        /* 🔍 МОДАЛЬНОЕ ОКНО */
         .modal {
             display: none;
             position: fixed;
@@ -372,7 +371,6 @@
             user-select: none;
         }
 
-        /* ПОДВАЛ */
         footer {
             margin-top: 60px;
             text-align: center;
@@ -386,7 +384,6 @@
         footer a { color: var(--primary-sage); text-decoration: none; font-weight: 600; margin: 0 6px; }
         footer a:hover { text-decoration: underline; }
 
-        /* АДАПТИВНОСТЬ */
         @media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 850px) {
             .main-layout { grid-template-columns: 1fr; }
@@ -459,7 +456,7 @@
                             <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
                             <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
                             <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                            <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
                             <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
                             <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
                         </svg>
@@ -472,11 +469,11 @@
 
             </aside>
 
-            <!-- 🖼️ КАТАЛОГ С ТЕГАМИ (data-tags) -->
+            <!-- 🖼️ КАТАЛОГ С ОБНОВЛЕННЫМИ ТЕГАМИ -->
             <main class="cards-grid">
 
                 <!-- 1. Корова -->
-                <div class="card" data-category="kids" data-age="2-5" data-tags="животные корова ферма милая детская">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное корова ферма милая детская скот бык">
                     <div class="card-image-wrapper" onclick="openModal('preview/cow coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/cow coloring book.jpg');"></div>
                     </div>
@@ -492,7 +489,7 @@
                 </div>
 
                 <!-- 2. Лошадка -->
-                <div class="card" data-category="kids" data-age="2-5" data-tags="животные лошадь лошадка ферма конь">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное лошадь лошадка ферма конь пони">
                     <div class="card-image-wrapper" onclick="openModal('preview/horse coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/horse coloring book.jpg');"></div>
                     </div>
@@ -508,7 +505,7 @@
                 </div>
 
                 <!-- 3. Петух -->
-                <div class="card" data-category="kids" data-age="2-5" data-tags="животные петух птица ферма деревня">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное петух птица ферма деревня курица">
                     <div class="card-image-wrapper" onclick="openModal('preview/rooster coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/rooster coloring book.jpg');"></div>
                     </div>
@@ -524,7 +521,7 @@
                 </div>
 
                 <!-- 4. Лабиринт Ёлочка -->
-                <div class="card" data-category="mazes" data-age="6-9" data-tags="новый год елочка елка праздник зима лабиринт">
+                <div class="card" data-category="mazes" data-age="6-9" data-tags="новый год елочка елка праздник зима лабиринт рождество">
                     <div class="card-image-wrapper" onclick="openModal('preview/Christmas tree maze.jpg')">
                         <div class="card-image" style="background-image: url('preview/Christmas tree maze.jpg');"></div>
                     </div>
@@ -540,7 +537,7 @@
                 </div>
 
                 <!-- 5. Филлворд Космос -->
-                <div class="card" data-category="fillwords" data-age="6-9" data-tags="космос филлворд ракета звезды слова поиск">
+                <div class="card" data-category="fillwords" data-age="6-9" data-tags="космос филлворд ракета звезды слова поиск планеты">
                     <div class="card-image-wrapper" onclick="openModal('preview/fillword Cosmos.jpg')">
                         <div class="card-image" style="background-image: url('preview/fillword Cosmos.jpg');"></div>
                     </div>
@@ -556,7 +553,7 @@
                 </div>
 
                 <!-- 6. По точкам Жираф -->
-                <div class="card" data-category="dots" data-age="2-5" data-tags="животные жираф точки соедини по точкам цифры">
+                <div class="card" data-category="dots" data-age="2-5" data-tags="животные животное жираф точки соедини по точкам цифры африка">
                     <div class="card-image-wrapper" onclick="openModal('preview/giraffe by dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/giraffe by dots.jpg');"></div>
                     </div>
@@ -572,7 +569,7 @@
                 </div>
 
                 <!-- 7. По точкам Щенок -->
-                <div class="card" data-category="dots" data-age="2-5" data-tags="животные щенок собака пёс точки соедини цифры">
+                <div class="card" data-category="dots" data-age="2-5" data-tags="животные животное щенок собака пёс точки соедини цифры питомец">
                     <div class="card-image-wrapper" onclick="openModal('preview/puppy by the dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/puppy by the dots.jpg');"></div>
                     </div>
@@ -588,7 +585,7 @@
                 </div>
 
                 <!-- 8. Пионы (Антистресс) -->
-                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы пионы антистресс природа растения букет">
+                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы пионы антистресс природа растения букет флора">
                     <div class="card-image-wrapper" onclick="openModal('preview/pions.jpg')">
                         <div class="card-image" style="background-image: url('preview/pions.jpg');"></div>
                     </div>
@@ -604,7 +601,7 @@
                 </div>
 
                 <!-- 9. Полевые цветы (Антистресс) -->
-                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы бабочки природа антистресс полевые цветы">
+                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы бабочки природа антистресс полевые цветы лето">
                     <div class="card-image-wrapper" onclick="openModal('preview/wildflowers and butterflies.jpg')">
                         <div class="card-image" style="background-image: url('preview/wildflowers and butterflies.jpg');"></div>
                     </div>
@@ -632,7 +629,7 @@
         </footer>
     </div>
 
-    <!-- 🔍 МОДАЛЬНОЕ ОКНО ДЛЯ ПРОСМОТРА КАРТИНКИ -->
+    <!-- 🔍 МОДАЛЬНОЕ ОКНО -->
     <div id="image-modal" class="modal" onclick="closeModal()">
         <span class="modal-close">&times;</span>
         <img class="modal-content" id="modal-img" alt="Предпросмотр">
@@ -678,7 +675,6 @@
             });
         }
 
-        /* Функции модального окна */
         function openModal(imgSrc) {
             const modal = document.getElementById('image-modal');
             const modalImg = document.getElementById('modal-img');
