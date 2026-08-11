@@ -422,54 +422,53 @@
         <div class="main-layout">
             
             <!-- 🍃 БОКОВОЕ МЕНЮ -->
-           <aside class="sidebar">
-    
-    <div class="filter-group" id="category-filters">
-        <div class="filter-title">
-            <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
-            </svg>
-            Разделы
-        </div>
-        <button class="filter-btn active" onclick="filterItems('cat', 'all', this)">Все материалы</button>
-        <button class="filter-btn" onclick="filterItems('cat', 'kids', this)">Детские раскраски</button>
-        <button class="filter-btn" onclick="filterItems('cat', 'antistress', this)">Антистресс</button>
-        <button class="filter-btn" onclick="filterItems('cat', 'mazes', this)">Лабиринты</button>
-        <button class="filter-btn" onclick="filterItems('cat', 'fillwords', this)">Филлворды</button>
-        <button class="filter-btn" onclick="filterItems('cat', 'dots', this)">По точкам</button>
-    </div>
+            <aside class="sidebar">
+                <div class="filter-group" id="category-filters">
+                    <div class="filter-title">
+                        <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                        </svg>
+                        Разделы
+                    </div>
+                    <button class="filter-btn active" onclick="filterItems('cat', 'all', this)">Все материалы</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'kids', this)">Детские раскраски</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'antistress', this)">Антистресс</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'mazes', this)">Лабиринты</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'fillwords', this)">Филлворды</button>
+                    <button class="filter-btn" onclick="filterItems('cat', 'dots', this)">По точкам</button>
+                </div>
 
-    <div class="filter-group" id="age-filters">
-        <div class="filter-title">
-            <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
-                <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
-            </svg>
-            Возраст
-        </div>
-        <button class="filter-btn active" onclick="filterItems('age', 'all', this)">Все возрасты</button>
-        <button class="filter-btn" onclick="filterItems('age', '2-5', this)">2–5 лет</button>
-        <button class="filter-btn" onclick="filterItems('age', '6-9', this)">6–9 лет</button>
-        <button class="filter-btn" onclick="filterItems('age', 'adult', this)">10+ / Взрослые</button>
-    </div>
+                <div class="filter-group" id="age-filters">
+                    <div class="filter-title">
+                        <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="5" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="19" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="5" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="19" cy="12" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="7" cy="17" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="17" cy="7" r="2.3" fill="#ffffff" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                            <circle cx="12" cy="12" r="3.2" fill="var(--accent-yellow)" stroke="var(--primary-sage)" stroke-width="1.2"/>
+                        </svg>
+                        Возраст
+                    </div>
+                    <button class="filter-btn active" onclick="filterItems('age', 'all', this)">Все возрасты</button>
+                    <button class="filter-btn" onclick="filterItems('age', '2-5', this)">2–5 лет</button>
+                    <button class="filter-btn" onclick="filterItems('age', '6-9', this)">6–9 лет</button>
+                    <button class="filter-btn" onclick="filterItems('age', 'adult', this)">10+ / Взрослые</button>
+                </div>
+            </aside>
 
-</aside>
-            <!-- 🖼️ КАТАЛОГ С ОБНОВЛЕННЫМИ ТЕГАМИ -->
+            <!-- 🖼️ КАТАЛОГ КАРТОЧЕК -->
             <main class="cards-grid">
 
                 <!-- 1. Корова -->
@@ -620,12 +619,16 @@
 
         </div>
 
+        <!-- 🌿 ПРАВИЛЬНЫЙ ФУТЕР -->
         <footer>
             <p>
                 <a href="privacy.html">Политика конфиденциальности</a> | 
                 <a href="terms.html">Условия использования</a>
             </p>
             <p style="margin-top: 8px;">© 2026 artlistprint.ru. Все материалы предназначены для бесплатной распечатки.</p>
+            <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.8;">
+                Информационная продукция для детей: <strong>0+</strong> (для детей любого возраста)
+            </p>
         </footer>
     </div>
 
@@ -635,113 +638,125 @@
         <img class="modal-content" id="modal-img" alt="Предпросмотр">
     </div>
 
-   <script>
-    let selectedCategory = 'all';
-    let selectedAge = 'all';
+    <script>
+        let selectedCategory = 'all';
+        let selectedAge = 'all';
 
-    function filterItems(type, value, element) {
-        const group = element.closest('.filter-group');
-        const isAlreadyActive = element.classList.contains('active');
+        function filterItems(type, value, element) {
+            const group = element.closest('.filter-group');
+            const isAlreadyActive = element.classList.contains('active');
 
-        // Если кликнули по уже активной кнопке (и это не "all"), снимаем выделение и возвращаем "all"
-        if (isAlreadyActive && value !== 'all') {
-            element.classList.remove('active');
-            const allBtn = group.querySelector('[onclick*="\'all\'"]');
-            if (allBtn) allBtn.classList.add('active');
+            if (isAlreadyActive && value !== 'all') {
+                element.classList.remove('active');
+                const allBtn = group.querySelector('[onclick*="\'all\'"]');
+                if (allBtn) allBtn.classList.add('active');
 
-            if (type === 'cat') selectedCategory = 'all';
-            if (type === 'age') selectedAge = 'all';
-        } else {
-            // Обычный выбор фильтра
-            group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-
-            if (type === 'cat') selectedCategory = value;
-            if (type === 'age') selectedAge = value;
-        }
-
-        applyFilters();
-    }
-
-    function resetAllFilters() {
-        selectedCategory = 'all';
-        selectedAge = 'all';
-        document.getElementById('search-input').value = '';
-
-        // Возвращаем подсветку на кнопки "Все"
-        document.querySelectorAll('.filter-group').forEach(group => {
-            group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            const allBtn = group.querySelector('[onclick*="\'all\'"]');
-            if (allBtn) allBtn.classList.add('active');
-        });
-
-        applyFilters();
-    }
-
-    function applyFilters() {
-        const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-        const cards = document.querySelectorAll('.card');
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-            const cat = card.getAttribute('data-category');
-            const age = card.getAttribute('data-age');
-            const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-            const title = card.querySelector('.card-title').innerText.toLowerCase();
-            const desc = card.querySelector('.card-desc').innerText.toLowerCase();
-
-            const matchCategory = (selectedCategory === 'all' || cat === selectedCategory);
-            const matchAge = (selectedAge === 'all' || age === selectedAge);
-
-            const fullContent = title + ' ' + desc + ' ' + tags;
-            const matchSearch = searchQuery === '' || fullContent.includes(searchQuery);
-
-            if (matchCategory && matchAge && matchSearch) {
-                card.style.display = 'flex';
-                visibleCount++;
+                if (type === 'cat') selectedCategory = 'all';
+                if (type === 'age') selectedAge = 'all';
             } else {
-                card.style.display = 'none';
-            }
-        });
+                group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
 
-        // Показываем сообщение, если ничего не найдено
-        let noResultsMsg = document.getElementById('no-results-msg');
-        if (visibleCount === 0) {
-            if (!noResultsMsg) {
-                noResultsMsg = document.createElement('div');
-                noResultsMsg.id = 'no-results-msg';
-                noResultsMsg.style.cssText = `
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 50px 20px;
-                    background: #ffffff;
-                    border-radius: 18px;
-                    border: 1px solid var(--border-soft);
-                    box-shadow: var(--shadow-soft);
-                `;
-                document.querySelector('.cards-grid').appendChild(noResultsMsg);
+                if (type === 'cat') selectedCategory = value;
+                if (type === 'age') selectedAge = value;
             }
-            noResultsMsg.innerHTML = `
-                <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">К сожалению, ничего не найдено 🌼</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Попробуйте выбрать другой раздел или сбросить фильтры.</p>
-                <button class="btn btn-pdf" style="display: inline-flex; padding: 10px 20px;" onclick="resetAllFilters()">Сбросить фильтры</button>
-            `;
-            noResultsMsg.style.display = 'block';
-        } else if (noResultsMsg) {
-            noResultsMsg.style.display = 'none';
+
+            applyFilters();
         }
-    }
 
-    function openModal(imgSrc) {
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById('modal-img');
-        modalImg.src = imgSrc;
-        modal.style.display = 'flex';
-    }
+        function resetAllFilters() {
+            selectedCategory = 'all';
+            selectedAge = 'all';
+            document.getElementById('search-input').value = '';
 
-    function closeModal() {
-        document.getElementById('image-modal').style.display = 'none';
-    }
-</script>
+            document.querySelectorAll('.filter-group').forEach(group => {
+                group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                const allBtn = group.querySelector('[onclick*="\'all\'"]');
+                if (allBtn) allBtn.classList.add('active');
+            });
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                const age = card.getAttribute('data-age');
+                const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+
+                const matchCategory = (selectedCategory === 'all' || cat === selectedCategory);
+                const matchAge = (selectedAge === 'all' || age === selectedAge);
+
+                const fullContent = title + ' ' + desc + ' ' + tags;
+                const matchSearch = searchQuery === '' || fullContent.includes(searchQuery);
+
+                if (matchCategory && matchAge && matchSearch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            let noResultsMsg = document.getElementById('no-results-msg');
+            if (visibleCount === 0) {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.id = 'no-results-msg';
+                    noResultsMsg.style.cssText = `
+                        grid-column: 1 / -1;
+                        text-align: center;
+                        padding: 50px 20px;
+                        background: #ffffff;
+                        border-radius: 18px;
+                        border: 1px solid var(--border-soft);
+                        box-shadow: var(--shadow-soft);
+                    `;
+                    document.querySelector('.cards-grid').appendChild(noResultsMsg);
+                }
+                noResultsMsg.innerHTML = `
+                    <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">К сожалению, ничего не найдено 🌼</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Попробуйте выбрать другой раздел или сбросить фильтры.</p>
+                    <button class="btn btn-pdf" style="display: inline-flex; padding: 10px 20px;" onclick="resetAllFilters()">Сбросить фильтры</button>
+                `;
+                noResultsMsg.style.display = 'block';
+            } else if (noResultsMsg) {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+
+        function openModal(imgSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = imgSrc;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+    </script>
+
+    <!-- 🍪 COOKIE BANNER -->
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; left: 20px; max-width: 420px; margin: 0 auto; background: #ffffff; padding: 16px 20px; border-radius: 14px; border: 1px solid #e5dfd3; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 9999; font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: #333d32;">
+        <p style="margin-bottom: 10px;">Мы используем файлы cookie и аналитику для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="privacy.html" style="color: #486a47; text-decoration: underline;">Политикой конфиденциальности</a>.</p>
+        <button onclick="acceptCookies()" style="background: #486a47; color: #fff; border: none; padding: 6px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; float: right;">Понятно</button>
+    </div>
+
+    <script>
+        function acceptCookies() {
+            localStorage.setItem('cookieAccepted', 'true');
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+        if (!localStorage.getItem('cookieAccepted')) {
+            document.getElementById('cookie-banner').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
