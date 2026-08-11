@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>artlistprint.ru — Авторские печатные материалы и раскраски</title>
     
-    <!-- Подключаем шрифты: Comfortaa (основной), Caveat, Nunito (для кнопок и подписей) -->
+    <!-- Подключаем шрифты: Comfortaa, Caveat, Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* ✒️ ПОДКТЮЧЕНИЕ MAGNOLIA SCRIPT С КОМПЬЮТЕРА / ИЗ ПАПКИ FONTS */
+        /* ✒️ ШРИФТ MAGNOLIA SCRIPT */
         @font-face {
             font-family: 'Magnolia Script';
             src: url('fonts/Magnolia.ttf') format('truetype'),
-                 url('fonts/MagnoliaScript.ttf') format('truetype'),
-                 url('fonts/Magnolia.otf') format('opentype'),
                  url('Magnolia.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
@@ -26,9 +24,9 @@
         /* 🌿 МЯГКАЯ ПРИРОДНАЯ ПАЛИТРА */
         :root {
             --bg-paper: #f8f5ee;
-            --primary-sage: #486a47; /* Шалфейно-зеленый */
+            --primary-sage: #486a47;
             --primary-sage-hover: #365235;
-            --accent-terracotta: #cc6244; /* Терракотовый */
+            --accent-terracotta: #cc6244;
             --accent-yellow: #f0c543;
             --text-main: #333d32;
             --text-muted: #6b756a;
@@ -66,15 +64,14 @@
         header {
             position: relative;
             text-align: center;
-            padding: 48px 20px 36px;
+            padding: 40px 20px 30px;
             background-color: rgba(255, 255, 255, 0.85);
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23486a47' stroke-width='1.2' opacity='0.25'%3E%3Cpath d='M20,12 C20,8 18,5 15,8 C12,5 10,8 10,12 C7,10 4,12 7,15 C4,18 7,20 10,20 C10,24 12,27 15,24 C18,27 20,24 20,20 C23,20 26,18 23,15 C26,12 23,10 20,12 Z'/%3E%3Ccircle cx='15' cy='16' r='3.5' fill='%23f0c543' stroke='none' opacity='0.7'/%3E%3C/g%3E%3Ccircle cx='55' cy='55' r='2' fill='%23f0c543' opacity='0.5'/%3E%3Ccircle cx='65' cy='20' r='1.5' fill='%23486a47' opacity='0.3'/%3E%3C/svg%3E");
             border-bottom: 2px dashed var(--border-soft);
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             border-radius: 0 0 25px 25px;
         }
 
-        /* НАЗВАНИЕ MAGNOLIA SCRIPT */
         .site-title {
             font-family: 'Magnolia Script', 'Caveat', cursive;
             font-size: 4.2rem;
@@ -85,20 +82,9 @@
             display: inline-block;
         }
 
-        .title-artlist {
-            color: var(--primary-sage);
-        }
-
-        .title-print {
-            color: var(--accent-terracotta);
-        }
-
-        .title-domain {
-            font-size: 2.2rem;
-            color: var(--text-muted);
-            font-family: 'Comfortaa', sans-serif;
-            font-weight: 400;
-        }
+        .title-artlist { color: var(--primary-sage); }
+        .title-print { color: var(--accent-terracotta); }
+        .title-domain { font-size: 2.2rem; color: var(--text-muted); font-family: 'Comfortaa', sans-serif; font-weight: 400; }
 
         .site-subtitle {
             font-family: 'Nunito', sans-serif;
@@ -107,6 +93,42 @@
             max-width: 680px;
             margin: 0 auto;
             font-weight: 600;
+        }
+
+        /* 🔍 СТРОКА ПОИСКА */
+        .search-container {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            border: 2px solid var(--border-soft);
+            border-radius: 14px;
+            background: #ffffff;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-sage);
+            box-shadow: 0 6px 16px rgba(72, 106, 71, 0.12);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+            pointer-events: none;
         }
 
         /* 📐 СТРУКТУРА МАКЕТА */
@@ -128,13 +150,8 @@
             top: 20px;
         }
 
-        .filter-group {
-            margin-bottom: 25px;
-        }
-
-        .filter-group:last-child {
-            margin-bottom: 0;
-        }
+        .filter-group { margin-bottom: 25px; }
+        .filter-group:last-child { margin-bottom: 0; }
 
         .filter-title {
             font-size: 0.8rem;
@@ -148,11 +165,7 @@
             gap: 8px;
         }
 
-        .daisy-icon {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
+        .daisy-icon { width: 18px; height: 18px; flex-shrink: 0; }
 
         .filter-btn {
             display: flex;
@@ -206,28 +219,48 @@
             box-shadow: 0 12px 28px rgba(72, 106, 71, 0.12);
         }
 
+        /* ФИКС: Картинка не обрезается и имеет рамку */
         .card-image-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 130%;
+            padding-top: 135%; /* Пропорция под A4 */
             background-color: #f3efe6;
             overflow: hidden;
             border-bottom: 1px solid var(--border-soft);
+            cursor: pointer;
+        }
+
+        .card-image-wrapper::after {
+            content: '🔍 Нажмите для просмотра';
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-main);
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .card-image-wrapper:hover::after {
+            opacity: 1;
         }
 
         .card-image {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background-size: contain; /* Картинка вмещается целиком! */
+            background-repeat: no-repeat;
             background-position: center;
             transition: transform 0.3s ease;
-        }
-
-        .card:hover .card-image {
-            transform: scale(1.03);
         }
 
         .card-body {
@@ -237,7 +270,6 @@
             flex-grow: 1;
         }
 
-        /* Плашка категории */
         .card-category {
             display: inline-block;
             font-family: 'Nunito', sans-serif;
@@ -267,7 +299,6 @@
             line-height: 1.4;
         }
 
-        /* 📥 КНОПКИ С АКЦЕНТОМ НА PDF */
         .card-actions {
             display: flex;
             gap: 8px;
@@ -292,9 +323,7 @@
             color: #ffffff;
         }
 
-        .btn-pdf:hover {
-            background-color: var(--primary-sage-hover);
-        }
+        .btn-pdf:hover { background-color: var(--primary-sage-hover); }
 
         .btn-jpg {
             flex: 0.8;
@@ -304,9 +333,43 @@
             opacity: 0.85;
         }
 
-        .btn-jpg:hover {
-            background-color: #f3efe6;
-            opacity: 1;
+        .btn-jpg:hover { background-color: #f3efe6; opacity: 1; }
+
+        /* 🔍 МОДАЛЬНОЕ ОКНО УВЕЛИЧЕННОГО ПРОСМОТРА */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 35, 30, 0.85);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: zoom-out;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+            background: #fff;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
         }
 
         /* ПОДВАЛ */
@@ -320,22 +383,11 @@
             padding-top: 30px;
         }
 
-        footer a {
-            color: var(--primary-sage);
-            text-decoration: none;
-            font-weight: 600;
-            margin: 0 6px;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
+        footer a { color: var(--primary-sage); text-decoration: none; font-weight: 600; margin: 0 6px; }
+        footer a:hover { text-decoration: underline; }
 
         /* АДАПТИВНОСТЬ */
-        @media (max-width: 1100px) {
-            .cards-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
+        @media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 850px) {
             .main-layout { grid-template-columns: 1fr; }
             .sidebar { position: static; }
@@ -343,10 +395,7 @@
             .site-title { font-size: 3.2rem; }
             .title-domain { font-size: 1.8rem; }
         }
-
-        @media (max-width: 550px) {
-            .cards-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 550px) { .cards-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -364,6 +413,15 @@
     </header>
 
     <div class="container">
+
+        <!-- 🔍 ПОИСК НАД КАТАЛОГОМ -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <input type="text" id="search-input" class="search-input" oninput="applyFilters()" placeholder="Поиск по названию или тегам (например: кошка, собака, новый год, цветы, животные)...">
+        </div>
+
         <div class="main-layout">
             
             <!-- 🍃 БОКОВОЕ МЕНЮ -->
@@ -414,12 +472,12 @@
 
             </aside>
 
-            <!-- 🖼️ КАТАЛОГ -->
+            <!-- 🖼️ КАТАЛОГ С ТЕГАМИ (data-tags) -->
             <main class="cards-grid">
 
                 <!-- 1. Корова -->
-                <div class="card" data-category="kids" data-age="2-5">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные корова ферма милая детская">
+                    <div class="card-image-wrapper" onclick="openModal('preview/cow coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/cow coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -434,8 +492,8 @@
                 </div>
 
                 <!-- 2. Лошадка -->
-                <div class="card" data-category="kids" data-age="2-5">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные лошадь лошадка ферма конь">
+                    <div class="card-image-wrapper" onclick="openModal('preview/horse coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/horse coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -450,8 +508,8 @@
                 </div>
 
                 <!-- 3. Петух -->
-                <div class="card" data-category="kids" data-age="2-5">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="kids" data-age="2-5" data-tags="животные петух птица ферма деревня">
+                    <div class="card-image-wrapper" onclick="openModal('preview/rooster coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/rooster coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -466,8 +524,8 @@
                 </div>
 
                 <!-- 4. Лабиринт Ёлочка -->
-                <div class="card" data-category="mazes" data-age="6-9">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="mazes" data-age="6-9" data-tags="новый год елочка елка праздник зима лабиринт">
+                    <div class="card-image-wrapper" onclick="openModal('preview/Christmas tree maze.jpg')">
                         <div class="card-image" style="background-image: url('preview/Christmas tree maze.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -482,8 +540,8 @@
                 </div>
 
                 <!-- 5. Филлворд Космос -->
-                <div class="card" data-category="fillwords" data-age="6-9">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="fillwords" data-age="6-9" data-tags="космос филлворд ракета звезды слова поиск">
+                    <div class="card-image-wrapper" onclick="openModal('preview/fillword Cosmos.jpg')">
                         <div class="card-image" style="background-image: url('preview/fillword Cosmos.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -491,15 +549,15 @@
                         <h3 class="card-title">Космос</h3>
                         <p class="card-desc">Поиск 9 космических слов в буквенной сетке с готовым ключом-ответом.</p>
                         <div class="card-actions">
-                            <a href="pdf/fillword Cosmos.pdf" class="btn btn-pdf" download>Скачать PDF</a>
+                            <a href="pdf/fillword cosmos.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/fillword Cosmos.jpg" class="btn btn-jpg" download>JPG</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- 6. По точкам Жираф -->
-                <div class="card" data-category="dots" data-age="2-5">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="dots" data-age="2-5" data-tags="животные жираф точки соедини по точкам цифры">
+                    <div class="card-image-wrapper" onclick="openModal('preview/giraffe by dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/giraffe by dots.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -514,8 +572,8 @@
                 </div>
 
                 <!-- 7. По точкам Щенок -->
-                <div class="card" data-category="dots" data-age="2-5">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="dots" data-age="2-5" data-tags="животные щенок собака пёс точки соедини цифры">
+                    <div class="card-image-wrapper" onclick="openModal('preview/puppy by the dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/puppy by the dots.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -530,8 +588,8 @@
                 </div>
 
                 <!-- 8. Пионы (Антистресс) -->
-                <div class="card" data-category="antistress" data-age="adult">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы пионы антистресс природа растения букет">
+                    <div class="card-image-wrapper" onclick="openModal('preview/pions.jpg')">
                         <div class="card-image" style="background-image: url('preview/pions.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -546,8 +604,8 @@
                 </div>
 
                 <!-- 9. Полевые цветы (Антистресс) -->
-                <div class="card" data-category="antistress" data-age="adult">
-                    <div class="card-image-wrapper">
+                <div class="card" data-category="antistress" data-age="adult" data-tags="цветы бабочки природа антистресс полевые цветы">
+                    <div class="card-image-wrapper" onclick="openModal('preview/wildflowers and butterflies.jpg')">
                         <div class="card-image" style="background-image: url('preview/wildflowers and butterflies.jpg');"></div>
                     </div>
                     <div class="card-body">
@@ -574,35 +632,62 @@
         </footer>
     </div>
 
+    <!-- 🔍 МОДАЛЬНОЕ ОКНО ДЛЯ ПРОСМОТРА КАРТИНКИ -->
+    <div id="image-modal" class="modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-img" alt="Предпросмотр">
+    </div>
+
     <script>
+        let selectedCategory = 'all';
+        let selectedAge = 'all';
+
         function filterItems(type, value, element) {
             const group = element.closest('.filter-group');
             group.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
 
-            const otherGroupId = group.id === 'category-filters' ? 'age-filters' : 'category-filters';
-            const otherGroup = document.getElementById(otherGroupId);
-            otherGroup.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if (type === 'cat') selectedCategory = value;
+            if (type === 'age') selectedAge = value;
 
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
             const cards = document.querySelectorAll('.card');
+
             cards.forEach(card => {
                 const cat = card.getAttribute('data-category');
                 const age = card.getAttribute('data-age');
+                const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
 
-                if (type === 'cat') {
-                    if (value === 'all' || cat === value) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                } else if (type === 'age') {
-                    if (age === value) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                const matchCategory = (selectedCategory === 'all' || cat === selectedCategory);
+                const matchAge = (selectedAge === 'all' || age === selectedAge);
+
+                const fullContent = title + ' ' + desc + ' ' + tags;
+                const matchSearch = searchQuery === '' || fullContent.includes(searchQuery);
+
+                if (matchCategory && matchAge && matchSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
                 }
             });
+        }
+
+        /* Функции модального окна */
+        function openModal(imgSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = imgSrc;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
         }
     </script>
 </body>
