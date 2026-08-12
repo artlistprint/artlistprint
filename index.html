@@ -23,7 +23,8 @@
     <meta name="description" content="Бесплатные авторские раскраски для детей, лабиринты, филлворды и антистресс-картинки для распечатки на формате А4. Скачивайте в один клик в PDF и JPG.">
 
     <!-- Иконка сайта (Favicon) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23486a47'/><circle cx='50' cy='50' r='18' fill='%23f0c543'/></svg>" type="image/svg+xml">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
 
     <!-- Подключаем шрифты: Comfortaa, Caveat, Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -661,7 +662,9 @@
     <script>
         let selectedCategory = 'all';
         let selectedAge = 'all';
+        let searchDebounce = null;
 
+        // Фильтрация с отправкой цели в Метрику
         function filterItems(type, value, element) {
             const group = element.closest('.filter-group');
             const isAlreadyActive = element.classList.contains('active');
@@ -679,6 +682,11 @@
 
                 if (type === 'cat') selectedCategory = value;
                 if (type === 'age') selectedAge = value;
+            }
+
+            // Цель: фильтр
+            if (typeof ym !== 'undefined') {
+                ym(111499772, 'reachGoal', 'filter_click');
             }
 
             applyFilters();
@@ -702,6 +710,16 @@
             const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
             const cards = document.querySelectorAll('.card');
             let visibleCount = 0;
+
+            // Цель: Поиск (с отправкой, когда пользователь ввел от 3 символов)
+            if (searchQuery.length >= 3) {
+                clearTimeout(searchDebounce);
+                searchDebounce = setTimeout(() => {
+                    if (typeof ym !== 'undefined') {
+                        ym(111499772, 'reachGoal', 'search_use');
+                    }
+                }, 1000);
+            }
 
             cards.forEach(card => {
                 const cat = card.getAttribute('data-category');
@@ -761,6 +779,25 @@
         function closeModal() {
             document.getElementById('image-modal').style.display = 'none';
         }
+
+        // Автоматическое отслеживание кликов по кнопкам скачивания PDF и JPG
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-pdf').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (typeof ym !== 'undefined') {
+                        ym(111499772, 'reachGoal', 'download_pdf');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-jpg').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (typeof ym !== 'undefined') {
+                        ym(111499772, 'reachGoal', 'download_jpg');
+                    }
+                });
+            });
+        });
     </script>
 
     <!-- 🍪 COOKIE BANNER -->
