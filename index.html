@@ -78,29 +78,33 @@
         .container {
             max-width: 1380px;
             margin: 0 auto;
-            padding: 0 25px;
+            padding: 0 20px;
+            width: 100%;
         }
 
-        /* 🌼 ШАПКА C РОМАШКАМИ */
+        /* 🌼 ШАПКА С РОМАШКАМИ */
         header {
+            width: 100%;
             position: relative;
             text-align: center;
-            padding: 40px 20px 30px;
-            background-color: rgba(255, 255, 255, 0.85);
+            padding: 35px 20px 25px;
+            background-color: rgba(255, 255, 255, 0.92);
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23486a47' stroke-width='1.2' opacity='0.25'%3E%3Cpath d='M20,12 C20,8 18,5 15,8 C12,5 10,8 10,12 C7,10 4,12 7,15 C4,18 7,20 10,20 C10,24 12,27 15,24 C18,27 20,24 20,20 C23,20 26,18 23,15 C26,12 23,10 20,12 Z'/%3E%3Ccircle cx='15' cy='16' r='3.5' fill='%23f0c543' stroke='none' opacity='0.7'/%3E%3C/g%3E%3Ccircle cx='55' cy='55' r='2' fill='%23f0c543' opacity='0.5'/%3E%3Ccircle cx='65' cy='20' r='1.5' fill='%23486a47' opacity='0.3'/%3E%3C/svg%3E");
-            border-bottom: 2px dashed var(--border-soft);
-            margin-bottom: 30px;
-            border-radius: 0 0 25px 25px;
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            margin: 20px 0 25px;
+            box-shadow: var(--shadow-soft);
         }
 
         .site-title {
             font-family: 'Magnolia Script', 'Caveat', cursive;
-            font-size: 4.2rem;
+            font-size: 4rem;
             font-weight: normal;
-            line-height: 1.25;
+            line-height: 1.2;
             margin-bottom: 8px;
             text-decoration: none;
             display: inline-block;
+            text-align: center;
         }
 
         .title-artlist { color: var(--primary-sage); }
@@ -109,17 +113,19 @@
 
         .site-subtitle {
             font-family: 'Nunito', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--text-muted);
             max-width: 680px;
             margin: 0 auto;
             font-weight: 600;
+            text-align: center;
         }
 
         /* 🔍 СТРОКА ПОИСКА */
         .search-container {
             margin-bottom: 25px;
             position: relative;
+            width: 100%;
         }
 
         .search-input {
@@ -440,7 +446,6 @@
                 margin-bottom: 8px;
             }
 
-            /* Превращаем кнопки фильтров в компактные горизонтальные ленты со скроллом */
             .filter-options {
                 display: flex;
                 flex-direction: row;
@@ -465,47 +470,113 @@
                 font-size: 0.85rem;
                 padding: 6px 12px;
             }
-
-            .cards-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 16px;
-            }
-
-            .site-title { font-size: 3.2rem; }
-            .title-domain { font-size: 1.8rem; }
         }
 
-        @media (max-width: 550px) { 
-            .container { padding: 0 15px; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .site-title { font-size: 2.6rem; }
-            .title-domain { font-size: 1.4rem; }
-            header { padding: 25px 15px 20px; }
+        /* 📱 СМАРТФОНЫ (ЭКРАНЫ МЕНЕЕ 600px) */
+        @media (max-width: 600px) { 
+            .container { padding: 0 12px; }
+
+            header {
+                padding: 22px 12px 18px;
+                margin: 12px 0 18px;
+                border-radius: 16px;
+            }
+
+            .site-title { 
+                font-size: 2.3rem; 
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+
+            .title-domain { font-size: 1.2rem; }
+            .site-subtitle { font-size: 0.82rem; line-height: 1.35; }
+
+            .search-input {
+                font-size: 0.88rem;
+                padding: 11px 14px 11px 40px;
+            }
+
+            .search-icon {
+                left: 12px;
+                width: 18px;
+                height: 18px;
+            }
+
+            /* 2 КАРТОЧКИ В РЯД НА МОБИЛЬНЫХ */
+            .cards-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px;
+            }
+
+            .card {
+                border-radius: 14px;
+            }
+
+            .card-body {
+                padding: 10px 8px;
+            }
+
+            .card-category {
+                font-size: 0.62rem;
+                padding: 2px 6px;
+                margin-bottom: 4px;
+                border-radius: 6px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .card-title {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+                line-height: 1.2;
+            }
+
+            .card-desc {
+                font-size: 0.72rem;
+                line-height: 1.25;
+                margin-bottom: 10px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .card-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .btn {
+                padding: 6px 4px;
+                font-size: 0.72rem;
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 🌼 ШАПКА САЙТА -->
-    <header>
-        <div class="container">
+    <div class="container">
+
+        <!-- 🌼 ШАПКА САЙТА -->
+        <header>
             <a href="/" style="text-decoration: none;">
                 <h1 class="site-title">
                     <span class="title-artlist">artlist</span><span class="title-print">print</span><span class="title-domain">.ru</span>
                 </h1>
             </a>
             <p class="site-subtitle">Авторские печатные материалы для детского развития, творчества и медитативного отдыха. Скачивайте в один клик в формате A4.</p>
-        </div>
-    </header>
-
-    <div class="container">
+        </header>
 
         <!-- 🔍 ПОИСК НАД КАТАЛОГОМ -->
         <div class="search-container">
             <svg class="search-icon" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
-            <input type="text" id="search-input" class="search-input" oninput="applyFilters()" placeholder="Поиск по названию или тегам (например: кошка, собака, новый год, цветы, животные)...">
+            <input type="text" id="search-input" class="search-input" oninput="applyFilters()" placeholder="Поиск по названию или тегам (например: кошка, собака, новый год)...">
         </div>
 
         <div class="main-layout">
@@ -570,7 +641,7 @@
                         <div class="card-image" style="background-image: url('preview/cow coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <span class="card-category">Детская • 2–5 лет</span>
                         <h3 class="card-title">Корова</h3>
                         <p class="card-desc">Простая милая раскраска с крупными детализированными контурами.</p>
                         <div class="card-actions">
@@ -586,7 +657,7 @@
                         <div class="card-image" style="background-image: url('preview/horse coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <span class="card-category">Детская • 2–5 лет</span>
                         <h3 class="card-title">Лошадка</h3>
                         <p class="card-desc">Доброе животное с четкими линиями для самых маленьких.</p>
                         <div class="card-actions">
@@ -602,7 +673,7 @@
                         <div class="card-image" style="background-image: url('preview/rooster coloring book.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <span class="card-category">Детская • 2–5 лет</span>
                         <h3 class="card-title">Петух</h3>
                         <p class="card-desc">Яркий персонаж для первого опыта раскрашивания карандашами.</p>
                         <div class="card-actions">
@@ -682,7 +753,7 @@
                         <div class="card-image" style="background-image: url('preview/pions.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Антистресс • 10+ лет</span>
+                        <span class="card-category">Антистресс • 10+</span>
                         <h3 class="card-title">Пионы</h3>
                         <p class="card-desc">Сложная эстетичная композиция с пышными пионами и пшеничными колосьями.</p>
                         <div class="card-actions">
@@ -698,8 +769,8 @@
                         <div class="card-image" style="background-image: url('preview/wildflowers and butterflies.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Антистресс • 10+ лет</span>
-                        <h3 class="card-title">Полевые цветы и бабочки</h3>
+                        <span class="card-category">Антистресс • 10+</span>
+                        <h3 class="card-title">Полевые цветы</h3>
                         <p class="card-desc">Детализированный природный узор для творческой медитации и расслабления.</p>
                         <div class="card-actions">
                             <a href="pdf/wildflowers and butterflies.pdf" class="btn btn-pdf" download>Скачать PDF</a>
@@ -714,9 +785,9 @@
                         <div class="card-image" style="background-image: url('preview/autumn_bouquet.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Антистресс • 10+ лет</span>
+                        <span class="card-category">Антистресс • 10+</span>
                         <h3 class="card-title">Осенний букет</h3>
-                        <p class="card-desc">Детализированная раскраска-антистресс с осенними цветами, хризантемами и резными листьями для медитативного творчества.</p>
+                        <p class="card-desc">Детализированная раскраска-антистресс с осенними цветами и листьями.</p>
                         <div class="card-actions">
                             <a href="pdf/autumn_bouquet.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/autumn_bouquet.jpg" class="btn btn-jpg" download>JPG</a>
@@ -730,9 +801,9 @@
                         <div class="card-image" style="background-image: url('preview/cat_coloring.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <span class="card-category">Детская • 2–5 лет</span>
                         <h3 class="card-title">Милая кошечка</h3>
-                        <p class="card-desc">Простая раскраска с толстым контуром и крупными деталями. Идеально подходит для первых шагов ребенка в рисовании.</p>
+                        <p class="card-desc">Простая раскраска с толстым контуром и крупными деталями.</p>
                         <div class="card-actions">
                             <a href="pdf/cat_coloring.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/cat_coloring.jpg" class="btn btn-jpg" download>JPG</a>
@@ -746,9 +817,9 @@
                         <div class="card-image" style="background-image: url('preview/bunny_carrot.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
-                        <h3 class="card-title">Зайчик с морковкой</h3>
-                        <p class="card-desc">Доброе задание для дошкольников. Четкие линии позволяют легко раскрашивать персонажа карандашами или фломастерами.</p>
+                        <span class="card-category">Детская • 2–5 лет</span>
+                        <h3 class="card-title">Зайчик</h3>
+                        <p class="card-desc">Доброе задание для дошкольников с чёткими контурами.</p>
                         <div class="card-actions">
                             <a href="pdf/bunny_carrot.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/bunny_carrot.jpg" class="btn btn-jpg" download>JPG</a>
@@ -762,9 +833,9 @@
                         <div class="card-image" style="background-image: url('preview/dump_truck.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
-                        <h3 class="card-title">Строительный самосвал</h3>
-                        <p class="card-desc">Крупный грузовик с улыбкой для юных любителей техники и машинок. Простой и понятный рисунок.</p>
+                        <span class="card-category">Детская • 2–5 лет</span>
+                        <h3 class="card-title">Самосвал</h3>
+                        <p class="card-desc">Крупный грузовик для юных любителей техники и машинок.</p>
                         <div class="card-actions">
                             <a href="pdf/dump_truck.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/dump_truck.jpg" class="btn btn-jpg" download>JPG</a>
@@ -778,9 +849,9 @@
                         <div class="card-image" style="background-image: url('preview/lion_coloring.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
-                        <h3 class="card-title">Симпатичный львенок</h3>
-                        <p class="card-desc">Дружелюбный царь зверей с пышной гривой. Занятие развивает аккуратность и мелкую моторику.</p>
+                        <span class="card-category">Детская • 2–5 лет</span>
+                        <h3 class="card-title">Львенок</h3>
+                        <p class="card-desc">Дружелюбный царь зверей развивает аккуратность и моторику.</p>
                         <div class="card-actions">
                             <a href="pdf/lion_coloring.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/lion_coloring.jpg" class="btn btn-jpg" download>JPG</a>
@@ -794,9 +865,9 @@
                         <div class="card-image" style="background-image: url('preview/robot_coloring.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 6–9 лет</span>
+                        <span class="card-category">Детская • 6–9 лет</span>
                         <h3 class="card-title">Робот-защитник</h3>
-                        <p class="card-desc">Мощный трансформер со щитом. Отлично подойдет мальчикам, увлекающимся роботами и супергероями.</p>
+                        <p class="card-desc">Мощный трансформер со щитом для любителей супергероев.</p>
                         <div class="card-actions">
                             <a href="pdf/robot_coloring.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/robot_coloring.jpg" class="btn btn-jpg" download>JPG</a>
@@ -811,8 +882,8 @@
                     </div>
                     <div class="card-body">
                         <span class="card-category">Лабиринт • 6–9 лет</span>
-                        <h3 class="card-title">Лабиринт «Снежинка»</h3>
-                        <p class="card-desc">Занимательная зимняя головоломка. Нужно найти путь от точки А до точки Б, развивая пространственное мышление.</p>
+                        <h3 class="card-title">Снежинка</h3>
+                        <p class="card-desc">Занимательная зимняя головоломка на пространственное мышление.</p>
                         <div class="card-actions">
                             <a href="pdf/snowflake_maze.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/snowflake_maze.jpg" class="btn btn-jpg" download>JPG</a>
@@ -826,9 +897,9 @@
                         <div class="card-image" style="background-image: url('preview/trex_coloring.jpg');"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-category">Детская раскраска • 2–5 лет</span>
+                        <span class="card-category">Детская • 2–5 лет</span>
                         <h3 class="card-title">Динозавр Т-Рекс</h3>
-                        <p class="card-desc">Веселый и совсем не страшный тираннозавр. Отличный выбор для всех поклонников мира динозавров.</p>
+                        <p class="card-desc">Веселый тираннозавр для поклонников мира динозавров.</p>
                         <div class="card-actions">
                             <a href="pdf/trex_coloring.pdf" class="btn btn-pdf" download>Скачать PDF</a>
                             <a href="preview/trex_coloring.jpg" class="btn btn-jpg" download>JPG</a>
@@ -840,7 +911,7 @@
 
         </div>
 
-        <!-- 🌿 ПРАВИЛЬНЫЙ ФУТЕР -->
+        <!-- 🌿 ФУТЕР -->
         <footer>
             <p>
                 <a href="privacy.html">Политика конфиденциальности</a> | 
@@ -864,7 +935,6 @@
         let selectedAge = 'all';
         let searchDebounce = null;
 
-        // Фильтрация с отправкой цели в Метрику
         function filterItems(type, value, element) {
             const group = element.closest('.filter-group');
             const isAlreadyActive = element.classList.contains('active');
@@ -884,9 +954,9 @@
                 if (type === 'age') selectedAge = value;
             }
 
-            // Цель: фильтр
             if (typeof ym !== 'undefined') {
                 ym(111499772, 'reachGoal', 'filter_click');
+                ym(111499772, 'reachGoal', 'use_filter');
             }
 
             applyFilters();
@@ -911,12 +981,12 @@
             const cards = document.querySelectorAll('.card');
             let visibleCount = 0;
 
-            // Цель: Поиск (с отправкой, когда пользователь ввел от 3 символов)
             if (searchQuery.length >= 3) {
                 clearTimeout(searchDebounce);
                 searchDebounce = setTimeout(() => {
                     if (typeof ym !== 'undefined') {
                         ym(111499772, 'reachGoal', 'search_use');
+                        ym(111499772, 'reachGoal', 'use_search');
                     }
                 }, 1000);
             }
@@ -950,7 +1020,7 @@
                     noResultsMsg.style.cssText = `
                         grid-column: 1 / -1;
                         text-align: center;
-                        padding: 50px 20px;
+                        padding: 40px 15px;
                         background: #ffffff;
                         border-radius: 18px;
                         border: 1px solid var(--border-soft);
@@ -959,8 +1029,8 @@
                     document.querySelector('.cards-grid').appendChild(noResultsMsg);
                 }
                 noResultsMsg.innerHTML = `
-                    <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">К сожалению, ничего не найдено 🌼</p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Попробуйте выбрать другой раздел или сбросить фильтры.</p>
+                    <p style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">К сожалению, ничего не найдено 🌼</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Попробуйте выбрать другой раздел или сбросить фильтры.</p>
                     <button class="btn btn-pdf" style="display: inline-flex; padding: 10px 20px;" onclick="resetAllFilters()">Сбросить фильтры</button>
                 `;
                 noResultsMsg.style.display = 'block';
@@ -980,7 +1050,6 @@
             document.getElementById('image-modal').style.display = 'none';
         }
 
-        // Автоматическое отслеживание кликов по кнопкам скачивания PDF и JPG
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.btn-pdf').forEach(button => {
                 button.addEventListener('click', function() {
@@ -1001,8 +1070,8 @@
     </script>
 
     <!-- 🍪 COOKIE BANNER -->
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; right: 20px; left: 20px; max-width: 420px; margin: 0 auto; background: #ffffff; padding: 16px 20px; border-radius: 14px; border: 1px solid #e5dfd3; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 9999; font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: #333d32;">
-        <p style="margin-bottom: 10px;">Мы используем файлы cookie и аналитику для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="privacy.html" style="color: #486a47; text-decoration: underline;">Политикой конфиденциальности</a>.</p>
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 15px; right: 15px; left: 15px; max-width: 420px; margin: 0 auto; background: #ffffff; padding: 14px 18px; border-radius: 14px; border: 1px solid #e5dfd3; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 9999; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #333d32;">
+        <p style="margin-bottom: 10px;">Мы используем файлы cookie для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с <a href="privacy.html" style="color: #486a47; text-decoration: underline;">Политикой конфиденциальности</a>.</p>
         <button onclick="acceptCookies()" style="background: #486a47; color: #fff; border: none; padding: 6px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; float: right;">Понятно</button>
     </div>
 
