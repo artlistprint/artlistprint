@@ -439,7 +439,7 @@
             z-index: 2100;
         }
 
-        /* 🎨 МОДАЛЬНОЕ ОКНО ИГРЫ (ОБНОВЛЕННЫЙ НЕЖНЫЙ ДИЗАЙН) */
+        /* 🎨 МОДАЛЬНОЕ ОКНО ИГРЫ */
         .game-modal-body {
             background: #fcfbf7;
             width: 100%;
@@ -647,7 +647,7 @@
             background: none;
         }
 
-        /* КОНТЕЙНЕР ХОЛСТА И ЗУМА */
+        /* КОНТЕЙНЕР ДВУХСЛОЙНОГО ХОЛСТА И ЗУМА */
         .canvas-container {
             flex-grow: 1;
             position: relative;
@@ -656,7 +656,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            overflow: auto; /* Позволяет прокручивать при увеличении */
+            overflow: auto;
             touch-action: pan-x pan-y;
         }
 
@@ -668,15 +668,31 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             border-radius: 12px;
             background: #ffffff;
+            overflow: hidden;
         }
 
-        #paint-canvas {
+        .canvas-wrapper canvas {
             display: block;
-            border-radius: 12px;
             max-width: 100%;
             max-height: 72vh;
             object-fit: contain;
+            border-radius: 12px;
+        }
+
+        /* Нижний слой: рисунок пользователя */
+        #drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
             cursor: crosshair;
+        }
+
+        /* Верхний слой: чёткие контуры и текст (прозрачный фон, пропускает клики) */
+        #template-canvas {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
         }
 
         /* Эффект Конфетти */
@@ -739,7 +755,7 @@
             .card-desc { font-size: 0.72rem !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
             .card-actions { flex-direction: column !important; gap: 5px !important; }
             .btn { padding: 6px 4px !important; font-size: 0.72rem !important; width: 100% !important; }
-            #paint-canvas { max-height: 55vh; }
+            .canvas-wrapper canvas { max-height: 55vh; }
         }
     </style>
 </head>
@@ -1134,7 +1150,6 @@
                     <div class="tool-group">
                         <div class="tool-slider">
                             <span>Размер:</span>
-                            <!-- Минимальный размер 4, максимальный 80 -->
                             <input type="range" id="tool-size" min="4" max="80" value="20" oninput="updateToolSettings()">
                         </div>
                         <div class="tool-slider">
@@ -1171,7 +1186,10 @@
 
                 <div class="canvas-container" id="canvas-container">
                     <div class="canvas-wrapper" id="canvas-wrapper">
-                        <canvas id="paint-canvas"></canvas>
+                        <!-- Слой 1: Рисунок пользователя -->
+                        <canvas id="drawing-canvas"></canvas>
+                        <!-- Слой 2: Чёрный контур, цифры и текст (прозрачный фон, сверху) -->
+                        <canvas id="template-canvas"></canvas>
                     </div>
                 </div>
 
@@ -1301,9 +1319,11 @@
         }
 
         /* ===================================================
-           🎮 ИГРОВОЙ ДВИЖОК CANVAS С СОХРАНЕНИЕМ КОНТУРОВ
+           🎮 ИГРОВОЙ ДВИЖОК CANVAS (ДВУХСЛОЙНЫЙ, БЕЗ СМЕШИВАНИЯ)
         =================================================== */
-        let canvas, ctx;
+        let drawCanvas, drawCtx;
+        let templateCanvas, templateCtx;
+
         let currentTool = 'brush';
         let currentColor = '#e74c3c';
         let brushSize = 20;
@@ -1359,43 +1379,55 @@
         }
 
         function initCanvas(imgSrc) {
-            canvas = document.getElementById('paint-canvas');
-            ctx = canvas.getContext('2d', { willReadFrequently: true });
+            drawCanvas = document.getElementById('drawing-canvas');
+            drawCtx = drawCanvas.getContext('2d', { willReadFrequently: true });
+
+            templateCanvas = document.getElementById('template-canvas');
+            templateCtx = templateCanvas.getContext('2d', { willReadFrequently: true });
 
             originalImageObj = new Image();
             originalImageObj.crossOrigin = "Anonymous";
             originalImageObj.src = imgSrc;
             originalImageObj.onload = function() {
-                canvas.width = originalImageObj.naturalWidth || 800;
-                canvas.height = originalImageObj.naturalHeight || 1000;
+                const width = originalImageObj.naturalWidth || 800;
+                const height = originalImageObj.naturalHeight || 1000;
+
+                drawCanvas.width = templateCanvas.width = width;
+                drawCanvas.height = templateCanvas.height = height;
+
+                // Загружаем контурный слой на верхний холст и делаем белую бумагу прозрачной
+                templateCtx.clearRect(0, 0, width, height);
+                templateCtx.drawImage(originalImageObj, 0, 0, width, height);
+
+                const imgData = templateCtx.getImageData(0, 0, width, height);
+                const d = imgData.data;
+                for (let i = 0; i < d.length; i += 4) {
+                    // Все светлые/белые пиксели делаем 100% прозрачными
+                    if (d[i] > 210 && d[i+1] > 210 && d[i+2] > 210) {
+                        d[i+3] = 0;
+                    }
+                }
+                templateCtx.putImageData(imgData, 0, 0);
+
                 resetCanvas();
             };
 
-            // Touch & Mouse
-            canvas.onmousedown = startDraw;
-            canvas.onmousemove = draw;
-            canvas.onmouseup = stopDraw;
-            canvas.onmouseleave = stopDraw;
+            // Назначаем события исключительно на рабочий нижний холст
+            drawCanvas.onmousedown = startDraw;
+            drawCanvas.onmousemove = draw;
+            drawCanvas.onmouseup = stopDraw;
+            drawCanvas.onmouseleave = stopDraw;
 
-            canvas.ontouchstart = (e) => { startDraw(e.touches[0]); e.preventDefault(); };
-            canvas.ontouchmove = (e) => { draw(e.touches[0]); e.preventDefault(); };
-            canvas.ontouchend = stopDraw;
+            drawCanvas.ontouchstart = (e) => { startDraw(e.touches[0]); e.preventDefault(); };
+            drawCanvas.ontouchmove = (e) => { draw(e.touches[0]); e.preventDefault(); };
+            drawCanvas.ontouchend = stopDraw;
         }
 
         function resetCanvas() {
-            if (!originalImageObj) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
-        }
-
-        /* Повторная накладка оригинальных черных контуров поверх рисунка */
-        function redrawContours() {
-            if (!originalImageObj) return;
-            ctx.save();
-            ctx.globalCompositeOperation = 'multiply';
-            ctx.globalAlpha = 1.0;
-            ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
-            ctx.restore();
+            if (!drawCtx) return;
+            drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+            drawCtx.fillStyle = '#FFFFFF';
+            drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
         }
 
         function setTool(tool) {
@@ -1440,9 +1472,9 @@
         }
 
         function getCanvasCoords(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
+            const rect = drawCanvas.getBoundingClientRect();
+            const scaleX = drawCanvas.width / rect.width;
+            const scaleY = drawCanvas.height / rect.height;
             return {
                 x: Math.round((e.clientX - rect.left) * scaleX),
                 y: Math.round((e.clientY - rect.top) * scaleY)
@@ -1455,10 +1487,9 @@
 
             if (currentTool === 'fill') {
                 floodFill(coords.x, coords.y, currentColor);
-                redrawContours(); // Сохраняем контуры после заливки
             } else {
-                ctx.beginPath();
-                ctx.moveTo(coords.x, coords.y);
+                drawCtx.beginPath();
+                drawCtx.moveTo(coords.x, coords.y);
             }
         }
 
@@ -1466,59 +1497,74 @@
             if (!isDrawing || currentTool === 'fill') return;
             const coords = getCanvasCoords(e);
 
-            ctx.lineWidth = brushSize;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
+            drawCtx.lineWidth = brushSize;
+            drawCtx.lineCap = 'round';
+            drawCtx.lineJoin = 'round';
+            drawCtx.globalCompositeOperation = 'source-over'; // Стандартный чистый цвет
 
             if (currentTool === 'eraser') {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.strokeStyle = '#ffffff';
-                ctx.globalAlpha = 1.0;
+                drawCtx.strokeStyle = '#ffffff';
+                drawCtx.globalAlpha = 1.0;
             } else {
-                // Использование multiply предотвращает закрашивание контуров
-                ctx.globalCompositeOperation = 'multiply';
-                ctx.strokeStyle = currentColor;
-                ctx.globalAlpha = brushOpacity;
+                drawCtx.strokeStyle = currentColor;
+                drawCtx.globalAlpha = brushOpacity;
             }
 
-            ctx.lineTo(coords.x, coords.y);
-            ctx.stroke();
+            drawCtx.lineTo(coords.x, coords.y);
+            drawCtx.stroke();
         }
 
         function stopDraw() {
             if (isDrawing) {
                 isDrawing = false;
-                ctx.beginPath();
-                ctx.globalAlpha = 1.0;
-                redrawContours(); // Восстанавливаем черные линии после завершения штриха
+                drawCtx.beginPath();
+                drawCtx.globalAlpha = 1.0;
             }
         }
 
-        /* Flood Fill */
+        /* Flood Fill (с учетом контуров шаблона верхнего слоя) */
         function floodFill(startX, startY, fillHex) {
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-            const targetColor = getPixelColor(data, startX, startY, canvas.width);
+            const width = drawCanvas.width;
+            const height = drawCanvas.height;
+
+            const drawImgData = drawCtx.getImageData(0, 0, width, height);
+            const drawData = drawImgData.data;
+
+            const tmplImgData = templateCtx.getImageData(0, 0, width, height);
+            const tmplData = tmplImgData.data;
+
+            const startIdx = (startY * width + startX) * 4;
+
+            // Если кликнули на чёрную линию шаблона — отмена
+            if (tmplData[startIdx + 3] > 100 && tmplData[startIdx] < 120) return;
+
+            const targetColor = [drawData[startIdx], drawData[startIdx+1], drawData[startIdx+2]];
             const fillRgb = hexToRgb(fillHex);
 
-            if (colorMatch(targetColor, fillRgb, 20)) return;
+            if (colorMatch(targetColor, fillRgb, 10)) return;
 
             const queue = [[startX, startY]];
-            const width = canvas.width;
-            const height = canvas.height;
+            const visited = new Uint8Array(width * height);
 
             while (queue.length > 0) {
                 const [x, y] = queue.pop();
-                const idx = (y * width + x) * 4;
-
                 if (x < 0 || x >= width || y < 0 || y >= height) continue;
 
-                const currentColor = [data[idx], data[idx+1], data[idx+2]];
-                if (colorMatch(currentColor, targetColor, 40)) {
-                    data[idx] = fillRgb[0];
-                    data[idx+1] = fillRgb[1];
-                    data[idx+2] = fillRgb[2];
-                    data[idx+3] = 255;
+                const pos = y * width + x;
+                if (visited[pos]) continue;
+                visited[pos] = 1;
+
+                const idx = pos * 4;
+
+                // Проверка: остановка на чёрных линиях верхнего контурного слоя
+                if (tmplData[idx + 3] > 100 && tmplData[idx] < 120) continue;
+
+                const currColor = [drawData[idx], drawData[idx+1], drawData[idx+2]];
+                if (colorMatch(currColor, targetColor, 35)) {
+                    drawData[idx] = fillRgb[0];
+                    drawData[idx+1] = fillRgb[1];
+                    drawData[idx+2] = fillRgb[2];
+                    drawData[idx+3] = 255;
 
                     queue.push([x + 1, y]);
                     queue.push([x - 1, y]);
@@ -1527,12 +1573,7 @@
                 }
             }
 
-            ctx.putImageData(imageData, 0, 0);
-        }
-
-        function getPixelColor(data, x, y, width) {
-            const idx = (y * width + x) * 4;
-            return [data[idx], data[idx+1], data[idx+2]];
+            drawCtx.putImageData(drawImgData, 0, 0);
         }
 
         function colorMatch(c1, c2, threshold = 30) {
@@ -1564,10 +1605,26 @@
             }
         }
 
+        /* Сохранение картинки без потери качества и артефактов */
         function saveCanvas() {
+            const exportCanvas = document.createElement('canvas');
+            exportCanvas.width = drawCanvas.width;
+            exportCanvas.height = drawCanvas.height;
+            const exportCtx = exportCanvas.getContext('2d');
+
+            // 1. Белый фон
+            exportCtx.fillStyle = '#FFFFFF';
+            exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+            // 2. Рисунок пользователя
+            exportCtx.drawImage(drawCanvas, 0, 0);
+
+            // 3. Четкие контуры и текст сверху
+            exportCtx.drawImage(templateCanvas, 0, 0);
+
             const link = document.createElement('a');
-            link.download = 'my-artlistprint-game.jpg';
-            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.download = 'artlistprint-coloring.jpg';
+            link.href = exportCanvas.toDataURL('image/jpeg', 0.92);
             link.click();
         }
 
@@ -1586,10 +1643,14 @@
         });
     </script>
 
-    <!-- 🍪 COOKIE BANNER -->
-    <div id="cookie-banner" style="display: none; position: fixed; bottom: 15px; right: 15px; left: 15px; max-width: 420px; margin: 0 auto; background: #ffffff; padding: 14px 18px; border-radius: 14px; border: 1px solid #e5dfd3; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 9999; font-family: 'Nunito', sans-serif; font-size: 0.82rem; color: #333d32;">
-        <p style="margin-bottom: 10px;">Мы используем файлы cookie для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с <a href="privacy.html" style="color: #486a47; text-decoration: underline;">Политикой конфиденциальности</a>.</p>
-        <button onclick="acceptCookies()" style="background: #486a47; color: #fff; border: none; padding: 6px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; float: right;">Понятно</button>
+    <!-- 🍪 УВЕДОМЛЕНИЕ О COOKIE И METRIKA -->
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; margin: 0 auto; background: rgba(255, 255, 255, 0.98); border: 1px solid var(--border-soft); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 16px; padding: 16px 20px; z-index: 9999; align-items: center; justify-content: space-between; gap: 15px; font-family: 'Nunito', sans-serif;">
+        <p style="font-size: 0.85rem; color: var(--text-main); margin: 0; line-height: 1.4;">
+            Мы используем cookie и сервисы аналитики для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с этим.
+        </p>
+        <button onclick="acceptCookies()" style="background: var(--primary-sage); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; font-size: 0.8rem; cursor: pointer; flex-shrink: 0;">
+            Понятно
+        </button>
     </div>
 
     <script>
@@ -1597,9 +1658,12 @@
             localStorage.setItem('cookieAccepted', 'true');
             document.getElementById('cookie-banner').style.display = 'none';
         }
-        if (!localStorage.getItem('cookieAccepted')) {
-            document.getElementById('cookie-banner').style.display = 'block';
-        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('cookieAccepted')) {
+                document.getElementById('cookie-banner').style.display = 'flex';
+            }
+        });
     </script>
 </body>
 </html>
