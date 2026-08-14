@@ -19,20 +19,16 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/111499772" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <!-- Описание для поисковиков (Яндекс / Google) -->
     <meta name="description" content="Бесплатные авторские раскраски для детей, лабиринты, филлворды и антистресс-картинки для распечатки на формате А4. Скачивайте в один клик в PDF и JPG.">
 
-    <!-- Иконка сайта (Favicon) -->
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="favicon.png">
 
-    <!-- Подключаем шрифты: Comfortaa, Caveat, Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* ✒️ ШРИФТ MAGNOLIA SCRIPT */
         @font-face {
             font-family: 'Magnolia Script';
             src: url('fonts/Magnolia.ttf') format('truetype'),
@@ -42,7 +38,6 @@
             font-display: swap;
         }
 
-        /* 🌿 МЯГКАЯ ПРИРОДНАЯ ПАЛИТРА */
         :root {
             --bg-paper: #f8f5ee;
             --primary-sage: #486a47;
@@ -86,7 +81,6 @@
             align-items: stretch;
         }
 
-        /* 🌼 ШАПКА С РОМАШКАМИ */
         header {
             width: 100%;
             position: relative;
@@ -126,7 +120,6 @@
             text-align: center;
         }
 
-        /* 🔍 СТРОКА ПОИСКА */
         .search-container {
             margin-bottom: 20px;
             position: relative;
@@ -165,17 +158,15 @@
             pointer-events: none;
         }
 
-        /* 📐 СТРУКТУРА МАКЕТА */
         .main-layout {
             display: grid;
-            grid-template-columns: 230px 1fr;
+            grid-template-columns: 240px 1fr;
             gap: 30px;
             align-items: start;
             width: 100%;
             box-sizing: border-box;
         }
 
-        /* 🍃 БОКОВОЕ МЕНЮ */
         .sidebar {
             background: var(--card-bg);
             padding: 22px 16px;
@@ -186,6 +177,39 @@
             top: 20px;
             width: 100%;
             box-sizing: border-box;
+        }
+
+        /* 🎮 КНОПКА ЗАПУСКА ИГРЫ */
+        .game-launch-btn {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #cc6244 0%, #e67e22 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(204, 98, 68, 0.3);
+            transition: all 0.25s ease;
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        .game-launch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(204, 98, 68, 0.45);
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 4px 14px rgba(204, 98, 68, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 6px 20px rgba(204, 98, 68, 0.55); }
+            100% { transform: scale(1); box-shadow: 0 4px 14px rgba(204, 98, 68, 0.3); }
         }
 
         .filter-group { margin-bottom: 25px; }
@@ -239,7 +263,6 @@
             font-weight: 700;
         }
 
-        /* 🖼️ КАТАЛОГ КАРТОЧЕК */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -294,9 +317,7 @@
             pointer-events: none;
         }
 
-        .card-image-wrapper:hover::after {
-            opacity: 1;
-        }
+        .card-image-wrapper:hover::after { opacity: 1; }
 
         .card-image {
             position: absolute;
@@ -382,7 +403,6 @@
 
         .btn-jpg:hover { background-color: #f3efe6; opacity: 1; }
 
-        /* 🔍 МОДАЛЬНОЕ ОКНО */
         .modal {
             display: none;
             position: fixed;
@@ -396,7 +416,6 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            cursor: zoom-out;
         }
 
         .modal-content {
@@ -417,6 +436,206 @@
             font-weight: bold;
             cursor: pointer;
             user-select: none;
+            z-index: 2100;
+        }
+
+        /* 🎨 МОДАЛЬНОЕ ОКНО ИГРЫ */
+        .game-modal-body {
+            background: #ffffff;
+            width: 100%;
+            max-width: 960px;
+            max-height: 92vh;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .game-header {
+            padding: 14px 20px;
+            background: var(--bg-paper);
+            border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .game-header h2 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            line-height: 1;
+        }
+
+        /* Выбор раскраски */
+        .game-selection-view {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .game-item-card {
+            background: var(--bg-paper);
+            border: 2px solid var(--border-soft);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .game-item-card:hover {
+            border-color: var(--accent-terracotta);
+            transform: translateY(-3px);
+        }
+
+        .game-item-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #fff;
+            margin-bottom: 8px;
+        }
+
+        .game-item-card p {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        /* Графический Редактор */
+        .game-editor-view {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .game-toolbar {
+            background: #fdfcf9;
+            border-bottom: 1px solid var(--border-soft);
+            padding: 10px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-soft);
+            background: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+        }
+
+        .tool-btn.active {
+            background: var(--primary-sage);
+            color: #fff;
+            border-color: var(--primary-sage);
+        }
+
+        .tool-slider {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .tool-slider input[type="range"] {
+            width: 70px;
+            accent-color: var(--primary-sage);
+        }
+
+        .color-palette {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .color-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px #ddd;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .color-swatch.active {
+            transform: scale(1.25);
+            box-shadow: 0 0 0 2px var(--accent-terracotta);
+        }
+
+        #custom-color {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background: none;
+        }
+
+        .canvas-container {
+            flex-grow: 1;
+            position: relative;
+            background: #f0ede6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #paint-canvas {
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: crosshair;
         }
 
         footer {
@@ -445,7 +664,6 @@
                 width: 100% !important;
             }
 
-            /* 🌼 СТРОГОЕ РАСТЯЖЕНИЕ БЛОКОВ */
             header, 
             .search-container, 
             .main-layout, 
@@ -474,10 +692,7 @@
             .title-domain { font-size: clamp(1.05rem, 4.2vw, 1.3rem) !important; }
             .site-subtitle { font-size: 0.82rem !important; line-height: 1.35 !important; max-width: 100% !important; }
 
-            /* 🔍 ПОИСК НА ВСЮ ШИРИНУ */
-            .search-container {
-                margin-bottom: 12px !important;
-            }
+            .search-container { margin-bottom: 12px !important; }
 
             .search-input {
                 font-size: 0.88rem !important;
@@ -493,7 +708,6 @@
                 height: 18px !important;
             }
 
-            /* 🍃 БОКОВОЕ МЕНЮ И СЕТКА */
             .main-layout { 
                 grid-template-columns: 1fr !important;
                 gap: 12px !important;
@@ -501,65 +715,56 @@
 
             .sidebar { 
                 position: static !important; 
-                padding: 12px 14px !important;
+                padding: 14px 14px !important;
                 margin-bottom: 0 !important;
                 border-radius: 16px !important;
             }
 
-            .filter-group {
-                margin-bottom: 10px !important;
-            }
+            .filter-group { margin-bottom: 12px !important; }
+            .filter-group:last-child { margin-bottom: 0 !important; }
+            .filter-title { font-size: 0.75rem !important; margin-bottom: 8px !important; }
 
-            .filter-group:last-child {
-                margin-bottom: 0 !important;
-            }
-
-            .filter-title {
-                font-size: 0.75rem !important;
-                margin-bottom: 6px !important;
-            }
-
+            /* 💥 ИСПРАВЛЕНИЕ: ПЕРЕНОС КАТЕГОРИЙ НА СЛЕДУЮЩУЮ СТРОКУ ИЗМЕСТО ОБРЕЗАНИЯ И СКРОЛЛА */
             .filter-options {
                 display: flex !important;
                 flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                gap: 8px !important;
-                padding-bottom: 4px !important;
-                -webkit-overflow-scrolling: touch;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-
-            .filter-options::-webkit-scrollbar {
-                display: none;
+                flex-wrap: wrap !important;
+                gap: 6px !important;
+                padding-bottom: 0 !important;
+                overflow-x: visible !important;
             }
 
             .filter-btn {
-                flex: 0 0 auto !important;
+                flex: 0 1 auto !important;
                 width: auto !important;
                 white-space: nowrap !important;
                 margin-bottom: 0 !important;
-                font-size: 0.85rem !important;
-                padding: 6px 12px !important;
+                font-size: 0.82rem !important;
+                padding: 6px 11px !important;
             }
+
+            .game-toolbar {
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .tool-btn {
+                padding: 5px 8px;
+                font-size: 0.75rem;
+            }
+
+            .tool-slider { font-size: 0.7rem; }
+            .tool-slider input[type="range"] { width: 50px; }
         }
 
-        /* 📱 СМАРТФОНЫ (ЭКРАНЫ МЕНЕЕ 600px) */
         @media (max-width: 600px) { 
-            /* 2 КАРТОЧКИ В РЯД НА МОБИЛЬНЫХ */
             .cards-grid { 
                 grid-template-columns: repeat(2, 1fr) !important; 
                 gap: 10px !important;
             }
 
-            .card {
-                border-radius: 14px !important;
-            }
-
-            .card-body {
-                padding: 10px 8px !important;
-            }
+            .card { border-radius: 14px !important; }
+            .card-body { padding: 10px 8px !important; }
 
             .card-category {
                 font-size: 0.62rem !important;
@@ -620,13 +825,19 @@
             <svg class="search-icon" viewBox="0 0 24 24">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
             </svg>
-            <input type="text" id="search-input" class="search-input" oninput="applyFilters()" placeholder="Поиск по названию или тегам (например: кошка, собака, новый год)...">
+            <input type="text" id="search-input" class="search-input" oninput="applyFilters()" placeholder="Поиск по названию и тегам">
         </div>
 
         <div class="main-layout">
             
             <!-- 🍃 БОКОВОЕ МЕНЮ -->
             <aside class="sidebar">
+
+                <!-- 🎮 КНОПКА ЗАПУСКА ИГРЫ-РАСКРАСКИ -->
+                <button class="game-launch-btn" onclick="openGameModal()">
+                    <span>🎨</span> Раскрасить онлайн
+                </button>
+
                 <div class="filter-group" id="category-filters">
                     <div class="filter-title">
                         <svg class="daisy-icon" viewBox="0 0 24 24" fill="none">
@@ -679,7 +890,6 @@
             <!-- 🖼️ КАТАЛОГ КАРТОЧЕК -->
             <main class="cards-grid">
 
-                <!-- 1. Корова -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное корова ферма милая детская скот бык">
                     <div class="card-image-wrapper" onclick="openModal('preview/cow coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/cow coloring book.jpg');"></div>
@@ -695,7 +905,6 @@
                     </div>
                 </div>
 
-                <!-- 2. Лошадка -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное лошадь лошадка ферма конь пони">
                     <div class="card-image-wrapper" onclick="openModal('preview/horse coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/horse coloring book.jpg');"></div>
@@ -711,7 +920,6 @@
                     </div>
                 </div>
 
-                <!-- 3. Петух -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="животные животное петух птица ферма деревня курица">
                     <div class="card-image-wrapper" onclick="openModal('preview/rooster coloring book.jpg')">
                         <div class="card-image" style="background-image: url('preview/rooster coloring book.jpg');"></div>
@@ -727,7 +935,6 @@
                     </div>
                 </div>
 
-                <!-- 4. Лабиринт Ёлочка -->
                 <div class="card" data-category="mazes" data-age="6-9" data-tags="новый год елочка елка праздник зима лабиринт рождество">
                     <div class="card-image-wrapper" onclick="openModal('preview/Christmas tree maze.jpg')">
                         <div class="card-image" style="background-image: url('preview/Christmas tree maze.jpg');"></div>
@@ -743,7 +950,6 @@
                     </div>
                 </div>
 
-                <!-- 5. Филлворд Космос -->
                 <div class="card" data-category="fillwords" data-age="6-9" data-tags="космос филлворд ракета звезды слова поиск планеты">
                     <div class="card-image-wrapper" onclick="openModal('preview/fillword Cosmos.jpg')">
                         <div class="card-image" style="background-image: url('preview/fillword Cosmos.jpg');"></div>
@@ -759,7 +965,6 @@
                     </div>
                 </div>
 
-                <!-- 6. По точкам Жираф -->
                 <div class="card" data-category="dots" data-age="2-5" data-tags="животные животное жираф точки соедини по точкам цифры африка">
                     <div class="card-image-wrapper" onclick="openModal('preview/giraffe by dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/giraffe by dots.jpg');"></div>
@@ -775,7 +980,6 @@
                     </div>
                 </div>
 
-                <!-- 7. По точкам Щенок -->
                 <div class="card" data-category="dots" data-age="2-5" data-tags="животные животное щенок собака пёс точки соедини цифры питомец">
                     <div class="card-image-wrapper" onclick="openModal('preview/puppy by the dots.jpg')">
                         <div class="card-image" style="background-image: url('preview/puppy by the dots.jpg');"></div>
@@ -791,7 +995,6 @@
                     </div>
                 </div>
 
-                <!-- 8. Пионы (Антистресс) -->
                 <div class="card" data-category="antistress" data-age="adult" data-tags="цветы пионы антистресс природа растения букет флора">
                     <div class="card-image-wrapper" onclick="openModal('preview/pions.jpg')">
                         <div class="card-image" style="background-image: url('preview/pions.jpg');"></div>
@@ -807,7 +1010,6 @@
                     </div>
                 </div>
 
-                <!-- 9. Полевые цветы (Антистресс) -->
                 <div class="card" data-category="antistress" data-age="adult" data-tags="цветы бабочки природа антистресс полевые цветы лето">
                     <div class="card-image-wrapper" onclick="openModal('preview/wildflowers and butterflies.jpg')">
                         <div class="card-image" style="background-image: url('preview/wildflowers and butterflies.jpg');"></div>
@@ -823,7 +1025,6 @@
                     </div>
                 </div>
 
-                <!-- 10. Осенний букет (Антистресс) -->
                 <div class="card" data-category="antistress" data-age="adult" data-tags="осенний букет антистресс цветы листья хризантемы герберы сложная раскраска">
                     <div class="card-image-wrapper" onclick="openModal('preview/autumn_bouquet.jpg')">
                         <div class="card-image" style="background-image: url('preview/autumn_bouquet.jpg');"></div>
@@ -839,7 +1040,6 @@
                     </div>
                 </div>
 
-                <!-- 11. Кошка -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="кошка котик животные простые раскраски для малышей крупный контур">
                     <div class="card-image-wrapper" onclick="openModal('preview/cat_coloring.jpg')">
                         <div class="card-image" style="background-image: url('preview/cat_coloring.jpg');"></div>
@@ -855,7 +1055,6 @@
                     </div>
                 </div>
 
-                <!-- 12. Зайчик с морковкой -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="зайчик кролик морковка животные раскраски для детей">
                     <div class="card-image-wrapper" onclick="openModal('preview/bunny_carrot.jpg')">
                         <div class="card-image" style="background-image: url('preview/bunny_carrot.jpg');"></div>
@@ -871,7 +1070,6 @@
                     </div>
                 </div>
 
-                <!-- 13. Самосвал -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="самосвал машинки грузовик стройка транспорт для мальчиков">
                     <div class="card-image-wrapper" onclick="openModal('preview/dump_truck.jpg')">
                         <div class="card-image" style="background-image: url('preview/dump_truck.jpg');"></div>
@@ -887,7 +1085,6 @@
                     </div>
                 </div>
 
-                <!-- 14. Лев -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="лев царь зверей дикие животные саванна раскраска для детей">
                     <div class="card-image-wrapper" onclick="openModal('preview/lion_coloring.jpg')">
                         <div class="card-image" style="background-image: url('preview/lion_coloring.jpg');"></div>
@@ -903,7 +1100,6 @@
                     </div>
                 </div>
 
-                <!-- 15. Робот -->
                 <div class="card" data-category="kids" data-age="6-9" data-tags="робот трансформер щит фантастика техника для мальчиков">
                     <div class="card-image-wrapper" onclick="openModal('preview/robot_coloring.jpg')">
                         <div class="card-image" style="background-image: url('preview/robot_coloring.jpg');"></div>
@@ -919,7 +1115,6 @@
                     </div>
                 </div>
 
-                <!-- 16. Лабиринт Снежинка -->
                 <div class="card" data-category="mazes" data-age="6-9" data-tags="лабиринт снежинка зима логика головоломка развивашка">
                     <div class="card-image-wrapper" onclick="openModal('preview/snowflake_maze.jpg')">
                         <div class="card-image" style="background-image: url('preview/snowflake_maze.jpg');"></div>
@@ -935,7 +1130,6 @@
                     </div>
                 </div>
 
-                <!-- 17. Тирекс -->
                 <div class="card" data-category="kids" data-age="2-5" data-tags="тирекс тираннозавр динозавры древний мир раскраска для детей">
                     <div class="card-image-wrapper" onclick="openModal('preview/trex_coloring.jpg')">
                         <div class="card-image" style="background-image: url('preview/trex_coloring.jpg');"></div>
@@ -955,7 +1149,6 @@
 
         </div>
 
-        <!-- 🌿 ФУТЕР -->
         <footer>
             <p>
                 <a href="privacy.html">Политика конфиденциальности</a> | 
@@ -968,10 +1161,75 @@
         </footer>
     </div>
 
-    <!-- 🔍 МОДАЛЬНОЕ ОКНО -->
+    <!-- 🔍 МОДАЛЬНОЕ ОКНО ПРОСМОТРА ИЗОБРАЖЕНИЯ -->
     <div id="image-modal" class="modal" onclick="closeModal()">
         <span class="modal-close">&times;</span>
         <img class="modal-content" id="modal-img" alt="Предпросмотр">
+    </div>
+
+    <!-- 🎮 МОДАЛЬНОЕ ОКНО ОНЛАЙН-ИГРЫ "РАСКРАСКА" -->
+    <div id="game-modal" class="modal">
+        <div class="game-modal-body">
+            
+            <div class="game-header">
+                <h2 id="game-header-title">🎨 Выберите раскраску</h2>
+                <button class="game-close-btn" onclick="closeGameModal()">&times;</button>
+            </div>
+
+            <!-- ЭКРАН 1: ВЫБОР РАСКРАСКИ ИЗ КАТАЛОГА -->
+            <div id="game-selection-view" class="game-selection-view">
+                <div class="game-grid" id="game-grid">
+                    <!-- Заполняется динамически скриптом -->
+                </div>
+            </div>
+
+            <!-- ЭКРАН 2: ХОЛСТ РЕДАКТОРА -->
+            <div id="game-editor-view" class="game-editor-view">
+                
+                <div class="game-toolbar">
+                    <div class="tool-group">
+                        <button class="tool-btn" onclick="backToGameSelection()">⬅️ Назад</button>
+                        <button class="tool-btn active" id="btn-fill" onclick="setTool('fill')">🪣 Заливка</button>
+                        <button class="tool-btn" id="btn-brush" onclick="setTool('brush')">🖌️ Кисть</button>
+                        <button class="tool-btn" id="btn-eraser" onclick="setTool('eraser')">🧹 Ластик</button>
+                    </div>
+
+                    <div class="tool-group">
+                        <div class="tool-slider">
+                            <span>Размер:</span>
+                            <input type="range" id="tool-size" min="2" max="40" value="12" oninput="updateToolSettings()">
+                        </div>
+                        <div class="tool-slider">
+                            <span>Прозрачность:</span>
+                            <input type="range" id="tool-opacity" min="0.1" max="1" step="0.1" value="1" oninput="updateToolSettings()">
+                        </div>
+                    </div>
+
+                    <div class="color-palette">
+                        <div class="color-swatch active" style="background: #e74c3c;" onclick="setColor('#e74c3c', this)"></div>
+                        <div class="color-swatch" style="background: #e67e22;" onclick="setColor('#e67e22', this)"></div>
+                        <div class="color-swatch" style="background: #f1c40f;" onclick="setColor('#f1c40f', this)"></div>
+                        <div class="color-swatch" style="background: #2ecc71;" onclick="setColor('#2ecc71', this)"></div>
+                        <div class="color-swatch" style="background: #1abc9c;" onclick="setColor('#1abc9c', this)"></div>
+                        <div class="color-swatch" style="background: #3498db;" onclick="setColor('#3498db', this)"></div>
+                        <div class="color-swatch" style="background: #9b59b6;" onclick="setColor('#9b59b6', this)"></div>
+                        <div class="color-swatch" style="background: #34495e;" onclick="setColor('#34495e', this)"></div>
+                        <input type="color" id="custom-color" value="#e74c3c" onchange="setColor(this.value, null)">
+                    </div>
+
+                    <div class="tool-group">
+                        <button class="tool-btn" onclick="resetCanvas()">🔄 Сброс</button>
+                        <button class="tool-btn" style="background: var(--primary-sage); color:#fff;" onclick="saveCanvas()">💾 Сохранить</button>
+                    </div>
+                </div>
+
+                <div class="canvas-container" id="canvas-container">
+                    <canvas id="paint-canvas"></canvas>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
     <script>
@@ -1094,20 +1352,234 @@
             document.getElementById('image-modal').style.display = 'none';
         }
 
+        /* ===================================================
+           🎮 ИГРА-РАСКРАСКА (CANVAS ENGINE)
+        =================================================== */
+        let canvas, ctx;
+        let currentTool = 'fill';
+        let currentColor = '#e74c3c';
+        let brushSize = 12;
+        let brushOpacity = 1.0;
+        let isDrawing = false;
+        let currentImgSource = '';
+        let originalImageObj = null;
+
+        function openGameModal() {
+            const modal = document.getElementById('game-modal');
+            modal.style.display = 'flex';
+            populateGameCatalog();
+            backToGameSelection();
+        }
+
+        function closeGameModal() {
+            document.getElementById('game-modal').style.display = 'none';
+        }
+
+        function populateGameCatalog() {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            
+            // Собираем карточки со страницы
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').innerText;
+                const img = card.querySelector('.card-image-wrapper').getAttribute('onclick').match(/'([^']+)'/)[1];
+                
+                const item = document.createElement('div');
+                item.className = 'game-item-card';
+                item.onclick = () => startColoring(img, title);
+                item.innerHTML = `
+                    <img src="${img}" alt="${title}">
+                    <p>${title}</p>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        function backToGameSelection() {
+            document.getElementById('game-selection-view').style.display = 'block';
+            document.getElementById('game-editor-view').style.display = 'none';
+            document.getElementById('game-header-title').innerText = '🎨 Выберите раскраску';
+        }
+
+        function startColoring(imgSrc, title) {
+            currentImgSource = imgSrc;
+            document.getElementById('game-selection-view').style.display = 'none';
+            document.getElementById('game-editor-view').style.display = 'flex';
+            document.getElementById('game-header-title').innerText = '🎨 Раскрашиваем: ' + title;
+
+            initCanvas(imgSrc);
+        }
+
+        function initCanvas(imgSrc) {
+            canvas = document.getElementById('paint-canvas');
+            ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+            originalImageObj = new Image();
+            originalImageObj.crossOrigin = "Anonymous";
+            originalImageObj.src = imgSrc;
+            originalImageObj.onload = function() {
+                canvas.width = originalImageObj.naturalWidth || 800;
+                canvas.height = originalImageObj.naturalHeight || 1000;
+                resetCanvas();
+            };
+
+            // Touch & Mouse Listeners
+            canvas.onmousedown = startDraw;
+            canvas.onmousemove = draw;
+            canvas.onmouseup = stopDraw;
+            canvas.onmouseleave = stopDraw;
+
+            canvas.ontouchstart = (e) => { startDraw(e.touches[0]); e.preventDefault(); };
+            canvas.ontouchmove = (e) => { draw(e.touches[0]); e.preventDefault(); };
+            canvas.ontouchend = stopDraw;
+        }
+
+        function resetCanvas() {
+            if (!originalImageObj) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
+        }
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + tool).classList.add('active');
+        }
+
+        function setColor(hex, elem) {
+            currentColor = hex;
+            document.getElementById('custom-color').value = hex;
+            if (elem) {
+                document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+                elem.classList.add('active');
+            }
+        }
+
+        function updateToolSettings() {
+            brushSize = parseInt(document.getElementById('tool-size').value);
+            brushOpacity = parseFloat(document.getElementById('tool-opacity').value);
+        }
+
+        function getCanvasCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: Math.round((e.clientX - rect.left) * scaleX),
+                y: Math.round((e.clientY - rect.top) * scaleY)
+            };
+        }
+
+        function startDraw(e) {
+            isDrawing = true;
+            const coords = getCanvasCoords(e);
+
+            if (currentTool === 'fill') {
+                floodFill(coords.x, coords.y, currentColor);
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(coords.x, coords.y);
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing || currentTool === 'fill') return;
+            const coords = getCanvasCoords(e);
+
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (currentTool === 'eraser') {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = '#ffffff';
+                ctx.globalAlpha = brushOpacity;
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+                ctx.globalAlpha = brushOpacity;
+            }
+
+            ctx.lineTo(coords.x, coords.y);
+            ctx.stroke();
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+            ctx.beginPath();
+            ctx.globalAlpha = 1.0;
+        }
+
+        /* Алгоритм Заливки (Flood Fill) */
+        function floodFill(startX, startY, fillHex) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            const targetColor = getPixelColor(data, startX, startY, canvas.width);
+            const fillRgb = hexToRgb(fillHex);
+
+            if (colorMatch(targetColor, fillRgb, 20)) return;
+
+            const queue = [[startX, startY]];
+            const width = canvas.width;
+            const height = canvas.height;
+
+            while (queue.length > 0) {
+                const [x, y] = queue.pop();
+                const idx = (y * width + x) * 4;
+
+                if (x < 0 || x >= width || y < 0 || y >= height) continue;
+
+                const currentColor = [data[idx], data[idx+1], data[idx+2]];
+                if (colorMatch(currentColor, targetColor, 40)) {
+                    data[idx] = fillRgb[0];
+                    data[idx+1] = fillRgb[1];
+                    data[idx+2] = fillRgb[2];
+                    data[idx+3] = 255;
+
+                    queue.push([x + 1, y]);
+                    queue.push([x - 1, y]);
+                    queue.push([x, y + 1]);
+                    queue.push([x, y - 1]);
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function getPixelColor(data, x, y, width) {
+            const idx = (y * width + x) * 4;
+            return [data[idx], data[idx+1], data[idx+2]];
+        }
+
+        function colorMatch(c1, c2, threshold = 30) {
+            return Math.abs(c1[0] - c2[0]) < threshold &&
+                   Math.abs(c1[1] - c2[1]) < threshold &&
+                   Math.abs(c1[2] - c2[2]) < threshold;
+        }
+
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.replace('#', ''), 16);
+            return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+        }
+
+        function saveCanvas() {
+            const link = document.createElement('a');
+            link.download = 'my-artlistprint-coloring.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.btn-pdf').forEach(button => {
                 button.addEventListener('click', function() {
-                    if (typeof ym !== 'undefined') {
-                        ym(111499772, 'reachGoal', 'download_pdf');
-                    }
+                    if (typeof ym !== 'undefined') ym(111499772, 'reachGoal', 'download_pdf');
                 });
             });
 
             document.querySelectorAll('.btn-jpg').forEach(button => {
                 button.addEventListener('click', function() {
-                    if (typeof ym !== 'undefined') {
-                        ym(111499772, 'reachGoal', 'download_jpg');
-                    }
+                    if (typeof ym !== 'undefined') ym(111499772, 'reachGoal', 'download_jpg');
                 });
             });
         });
