@@ -439,23 +439,25 @@
             z-index: 2100;
         }
 
-        /* 🎨 МОДАЛЬНОЕ ОКНО ИГРЫ */
+        /* 🎨 МОДАЛЬНОЕ ОКНО ИГРЫ (ОБНОВЛЕННЫЙ НЕЖНЫЙ ДИЗАЙН) */
         .game-modal-body {
-            background: #ffffff;
+            background: #fcfbf7;
             width: 100%;
-            max-width: 960px;
-            max-height: 92vh;
-            border-radius: 20px;
+            max-width: 1050px;
+            height: 90vh;
+            max-height: 900px;
+            border-radius: 24px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            border: 1px solid var(--border-soft);
         }
 
         .game-header {
-            padding: 14px 20px;
-            background: var(--bg-paper);
+            padding: 14px 24px;
+            background: #ffffff;
             border-bottom: 1px solid var(--border-soft);
             display: flex;
             align-items: center;
@@ -463,63 +465,78 @@
         }
 
         .game-header h2 {
-            font-size: 1.2rem;
-            color: var(--text-main);
+            font-size: 1.25rem;
+            color: var(--primary-sage);
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .game-close-btn {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
+            background: var(--bg-paper);
+            border: 1px solid var(--border-soft);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.4rem;
             cursor: pointer;
             color: var(--text-muted);
-            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
 
-        /* Выбор раскраски */
+        .game-close-btn:hover {
+            background: var(--accent-terracotta);
+            color: #fff;
+            border-color: var(--accent-terracotta);
+        }
+
+        /* Выбор игры */
         .game-selection-view {
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
             flex-grow: 1;
         }
 
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 18px;
         }
 
         .game-item-card {
-            background: var(--bg-paper);
-            border: 2px solid var(--border-soft);
-            border-radius: 12px;
-            padding: 10px;
+            background: #ffffff;
+            border: 1.5px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .game-item-card:hover {
-            border-color: var(--accent-terracotta);
-            transform: translateY(-3px);
+            border-color: var(--primary-sage);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(72, 106, 71, 0.12);
         }
 
         .game-item-card img {
             width: 100%;
-            height: 130px;
+            height: 140px;
             object-fit: contain;
-            border-radius: 8px;
-            background: #fff;
+            border-radius: 10px;
+            background: #fdfdfd;
             margin-bottom: 8px;
         }
 
         .game-item-card p {
             font-family: 'Nunito', sans-serif;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-main);
         }
 
@@ -533,12 +550,12 @@
         }
 
         .game-toolbar {
-            background: #fdfcf9;
+            background: #ffffff;
             border-bottom: 1px solid var(--border-soft);
-            padding: 10px 14px;
+            padding: 10px 16px;
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             justify-content: space-between;
         }
@@ -551,10 +568,11 @@
         }
 
         .tool-btn {
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 7px 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-soft);
-            background: #fff;
+            background: var(--bg-paper);
+            color: var(--text-main);
             font-family: 'Nunito', sans-serif;
             font-size: 0.82rem;
             font-weight: 700;
@@ -563,6 +581,10 @@
             align-items: center;
             gap: 5px;
             transition: all 0.15s ease;
+        }
+
+        .tool-btn:hover {
+            background: #ede8dc;
         }
 
         .tool-btn.active {
@@ -579,17 +601,26 @@
             font-family: 'Nunito', sans-serif;
             font-weight: 700;
             color: var(--text-muted);
+            background: var(--bg-paper);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-soft);
         }
 
         .tool-slider input[type="range"] {
-            width: 70px;
+            width: 75px;
             accent-color: var(--primary-sage);
+            cursor: pointer;
         }
 
         .color-palette {
             display: flex;
             align-items: center;
             gap: 6px;
+            background: var(--bg-paper);
+            padding: 4px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-soft);
         }
 
         .color-swatch {
@@ -608,34 +639,60 @@
         }
 
         #custom-color {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             background: none;
         }
 
+        /* КОНТЕЙНЕР ХОЛСТА И ЗУМА */
         .canvas-container {
             flex-grow: 1;
             position: relative;
-            background: #f0ede6;
+            background: #f2efe9;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            overflow: hidden;
-            touch-action: none;
+            padding: 20px;
+            overflow: auto; /* Позволяет прокручивать при увеличении */
+            touch-action: pan-x pan-y;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+            transform-origin: center center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            background: #ffffff;
         }
 
         #paint-canvas {
-            background: #ffffff;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            display: block;
+            border-radius: 12px;
             max-width: 100%;
-            max-height: 100%;
+            max-height: 72vh;
             object-fit: contain;
             cursor: crosshair;
+        }
+
+        /* Эффект Конфетти */
+        .confetti-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            pointer-events: none;
+            animation: confettiFall 2.5s ease-out forwards;
+            z-index: 3000;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
         }
 
         footer {
@@ -653,156 +710,36 @@
         footer a { color: var(--primary-sage); text-decoration: none; font-weight: 600; margin: 0 6px; }
         footer a:hover { text-decoration: underline; }
 
-        /* 📱 АДАПТИВНОСТЬ И МОБИЛЬНАЯ ВЕРСТКА */
+        /* 📱 АДАПТИВНОСТЬ */
         @media (max-width: 1100px) { 
             .cards-grid { grid-template-columns: repeat(2, 1fr); } 
         }
 
         @media (max-width: 850px) {
-            .container { 
-                padding: 0 12px !important; 
-                width: 100% !important;
-            }
-
-            header, 
-            .search-container, 
-            .main-layout, 
-            .sidebar {
-                width: 100% !important;
-                max-width: 100% !important;
-                min-width: 100% !important;
-                box-sizing: border-box !important;
-            }
-
-            header {
-                padding: 18px 14px 14px !important;
-                margin: 10px 0 12px !important;
-                border-radius: 16px !important;
-            }
-
-            .site-title { 
-                font-size: clamp(1.8rem, 7vw, 2.4rem) !important; 
-                display: block !important;
-                width: 100% !important;
-                text-align: center !important;
-                line-height: 1.15 !important;
-                margin-bottom: 4px !important;
-            }
-
-            .title-domain { font-size: clamp(1.05rem, 4.2vw, 1.3rem) !important; }
-            .site-subtitle { font-size: 0.82rem !important; line-height: 1.35 !important; max-width: 100% !important; }
-
-            .search-container { margin-bottom: 12px !important; }
-
-            .search-input {
-                font-size: 0.88rem !important;
-                padding: 11px 14px 11px 38px !important;
-                border-radius: 12px !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-            }
-
-            .search-icon {
-                left: 12px !important;
-                width: 18px !important;
-                height: 18px !important;
-            }
-
-            .main-layout { 
-                grid-template-columns: 1fr !important;
-                gap: 12px !important;
-            }
-
-            .sidebar { 
-                position: static !important; 
-                padding: 14px 14px !important;
-                margin-bottom: 0 !important;
-                border-radius: 16px !important;
-            }
-
-            .filter-group { margin-bottom: 12px !important; }
-            .filter-group:last-child { margin-bottom: 0 !important; }
-            .filter-title { font-size: 0.75rem !important; margin-bottom: 8px !important; }
-
-            /* 💥 ИСПРАВЛЕНИЕ: ПЕРЕНОС КАТЕГОРИЙ НА СЛЕДУЮЩУЮ СТРОКУ ИЗМЕСТО ОБРЕЗАНИЯ И СКРОЛЛА */
-            .filter-options {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: wrap !important;
-                gap: 6px !important;
-                padding-bottom: 0 !important;
-                overflow-x: visible !important;
-            }
-
-            .filter-btn {
-                flex: 0 1 auto !important;
-                width: auto !important;
-                white-space: nowrap !important;
-                margin-bottom: 0 !important;
-                font-size: 0.82rem !important;
-                padding: 6px 11px !important;
-            }
-
-            .game-toolbar {
-                padding: 8px;
-                gap: 8px;
-            }
-
-            .tool-btn {
-                padding: 5px 8px;
-                font-size: 0.75rem;
-            }
-
-            .tool-slider { font-size: 0.7rem; }
-            .tool-slider input[type="range"] { width: 50px; }
+            .container { padding: 0 12px !important; width: 100% !important; }
+            header, .search-container, .main-layout, .sidebar { width: 100% !important; box-sizing: border-box !important; }
+            header { padding: 18px 14px 14px !important; margin: 10px 0 12px !important; border-radius: 16px !important; }
+            .site-title { font-size: clamp(1.8rem, 7vw, 2.4rem) !important; display: block !important; text-align: center !important; }
+            .main-layout { grid-template-columns: 1fr !important; gap: 12px !important; }
+            .sidebar { position: static !important; padding: 14px 14px !important; }
+            .filter-options { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 6px !important; }
+            .filter-btn { flex: 0 1 auto !important; width: auto !important; white-space: nowrap !important; padding: 6px 11px !important; }
+            .game-toolbar { padding: 8px; gap: 6px; }
+            .tool-btn { padding: 5px 8px; font-size: 0.75rem; }
+            .tool-slider { font-size: 0.7rem; padding: 4px 6px; }
+            .tool-slider input[type="range"] { width: 45px; }
         }
 
         @media (max-width: 600px) { 
-            .cards-grid { 
-                grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 10px !important;
-            }
-
+            .cards-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
             .card { border-radius: 14px !important; }
             .card-body { padding: 10px 8px !important; }
-
-            .card-category {
-                font-size: 0.62rem !important;
-                padding: 2px 6px !important;
-                margin-bottom: 4px !important;
-                border-radius: 6px !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 100% !important;
-            }
-
-            .card-title {
-                font-size: 0.85rem !important;
-                margin-bottom: 4px !important;
-                line-height: 1.2 !important;
-            }
-
-            .card-desc {
-                font-size: 0.72rem !important;
-                line-height: 1.25 !important;
-                margin-bottom: 10px !important;
-                display: -webkit-box !important;
-                -webkit-line-clamp: 2 !important;
-                -webkit-box-orient: vertical !important;
-                overflow: hidden !important;
-            }
-
-            .card-actions {
-                flex-direction: column !important;
-                gap: 5px !important;
-            }
-
-            .btn {
-                padding: 6px 4px !important;
-                font-size: 0.72rem !important;
-                width: 100% !important;
-            }
+            .card-category { font-size: 0.62rem !important; padding: 2px 6px !important; }
+            .card-title { font-size: 0.85rem !important; }
+            .card-desc { font-size: 0.72rem !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+            .card-actions { flex-direction: column !important; gap: 5px !important; }
+            .btn { padding: 6px 4px !important; font-size: 0.72rem !important; width: 100% !important; }
+            #paint-canvas { max-height: 55vh; }
         }
     </style>
 </head>
@@ -833,9 +770,9 @@
             <!-- 🍃 БОКОВОЕ МЕНЮ -->
             <aside class="sidebar">
 
-                <!-- 🎮 КНОПКА ЗАПУСКА ИГРЫ-РАСКРАСКИ -->
+                <!-- 🎮 КНОПКА ЗАПУСКА ИГРЫ -->
                 <button class="game-launch-btn" onclick="openGameModal()">
-                    <span>🎨</span> Раскрасить онлайн
+                    <span>🎮</span> Играть онлайн
                 </button>
 
                 <div class="filter-group" id="category-filters">
@@ -1167,16 +1104,16 @@
         <img class="modal-content" id="modal-img" alt="Предпросмотр">
     </div>
 
-    <!-- 🎮 МОДАЛЬНОЕ ОКНО ОНЛАЙН-ИГРЫ "РАСКРАСКА" -->
+    <!-- 🎮 МОДАЛЬНОЕ ОКНО ОНЛАЙН-ИГРЫ -->
     <div id="game-modal" class="modal">
         <div class="game-modal-body">
             
             <div class="game-header">
-                <h2 id="game-header-title">🎨 Выберите раскраску</h2>
+                <h2 id="game-header-title">🎮 Выберите игру</h2>
                 <button class="game-close-btn" onclick="closeGameModal()">&times;</button>
             </div>
 
-            <!-- ЭКРАН 1: ВЫБОР РАСКРАСКИ ИЗ КАТАЛОГА -->
+            <!-- ЭКРАН 1: ВЫБОР ИГРЫ ИЗ КАТАЛОГА -->
             <div id="game-selection-view" class="game-selection-view">
                 <div class="game-grid" id="game-grid">
                     <!-- Заполняется динамически скриптом -->
@@ -1188,21 +1125,29 @@
                 
                 <div class="game-toolbar">
                     <div class="tool-group">
-                        <button class="tool-btn" onclick="backToGameSelection()">⬅️ Назад</button>
-                        <button class="tool-btn active" id="btn-fill" onclick="setTool('fill')">🪣 Заливка</button>
-                        <button class="tool-btn" id="btn-brush" onclick="setTool('brush')">🖌️ Кисть</button>
+                        <button class="tool-btn" onclick="backToGameSelection()">⬅️ Каталог</button>
+                        <button class="tool-btn active" id="btn-brush" onclick="setTool('brush')">🖌️ Кисть</button>
+                        <button class="tool-btn" id="btn-fill" onclick="setTool('fill')">🪣 Заливка</button>
                         <button class="tool-btn" id="btn-eraser" onclick="setTool('eraser')">🧹 Ластик</button>
                     </div>
 
                     <div class="tool-group">
                         <div class="tool-slider">
                             <span>Размер:</span>
-                            <input type="range" id="tool-size" min="2" max="40" value="12" oninput="updateToolSettings()">
+                            <!-- Минимальный размер 4, максимальный 80 -->
+                            <input type="range" id="tool-size" min="4" max="80" value="20" oninput="updateToolSettings()">
                         </div>
                         <div class="tool-slider">
                             <span>Прозрачность:</span>
-                            <input type="range" id="tool-opacity" min="0.1" max="1" step="0.1" value="1" oninput="updateToolSettings()">
+                            <input type="range" id="tool-opacity" min="0.1" max="1" step="0.05" value="0.8" oninput="updateToolSettings()">
                         </div>
+                    </div>
+
+                    <!-- Зум и подгонка рисунка -->
+                    <div class="tool-group">
+                        <button class="tool-btn" onclick="changeZoom(-0.15)" title="Уменьшить">🔍 -</button>
+                        <button class="tool-btn" onclick="changeZoom(0.15)" title="Увеличить">🔍 +</button>
+                        <button class="tool-btn" onclick="resetZoom()" title="Сбросить масштаб">100%</button>
                     </div>
 
                     <div class="color-palette">
@@ -1219,12 +1164,15 @@
 
                     <div class="tool-group">
                         <button class="tool-btn" onclick="resetCanvas()">🔄 Сброс</button>
+                        <button class="tool-btn" style="background: #f0c543; color:#333;" onclick="triggerVictoryEffect()">🎉 Готово!</button>
                         <button class="tool-btn" style="background: var(--primary-sage); color:#fff;" onclick="saveCanvas()">💾 Сохранить</button>
                     </div>
                 </div>
 
                 <div class="canvas-container" id="canvas-container">
-                    <canvas id="paint-canvas"></canvas>
+                    <div class="canvas-wrapper" id="canvas-wrapper">
+                        <canvas id="paint-canvas"></canvas>
+                    </div>
                 </div>
 
             </div>
@@ -1353,16 +1301,16 @@
         }
 
         /* ===================================================
-           🎮 ИГРА-РАСКРАСКА (CANVAS ENGINE)
+           🎮 ИГРОВОЙ ДВИЖОК CANVAS С СОХРАНЕНИЕМ КОНТУРОВ
         =================================================== */
         let canvas, ctx;
-        let currentTool = 'fill';
+        let currentTool = 'brush';
         let currentColor = '#e74c3c';
-        let brushSize = 12;
-        let brushOpacity = 1.0;
+        let brushSize = 20;
+        let brushOpacity = 0.8;
         let isDrawing = false;
-        let currentImgSource = '';
         let originalImageObj = null;
+        let currentZoom = 1;
 
         function openGameModal() {
             const modal = document.getElementById('game-modal');
@@ -1379,7 +1327,6 @@
             const grid = document.getElementById('game-grid');
             grid.innerHTML = '';
             
-            // Собираем карточки со страницы
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 const title = card.querySelector('.card-title').innerText;
@@ -1399,15 +1346,15 @@
         function backToGameSelection() {
             document.getElementById('game-selection-view').style.display = 'block';
             document.getElementById('game-editor-view').style.display = 'none';
-            document.getElementById('game-header-title').innerText = '🎨 Выберите раскраску';
+            document.getElementById('game-header-title').innerText = '🎮 Выберите игру';
         }
 
         function startColoring(imgSrc, title) {
-            currentImgSource = imgSrc;
             document.getElementById('game-selection-view').style.display = 'none';
             document.getElementById('game-editor-view').style.display = 'flex';
-            document.getElementById('game-header-title').innerText = '🎨 Раскрашиваем: ' + title;
+            document.getElementById('game-header-title').innerText = '🎨 Играем: ' + title;
 
+            resetZoom();
             initCanvas(imgSrc);
         }
 
@@ -1424,7 +1371,7 @@
                 resetCanvas();
             };
 
-            // Touch & Mouse Listeners
+            // Touch & Mouse
             canvas.onmousedown = startDraw;
             canvas.onmousemove = draw;
             canvas.onmouseup = stopDraw;
@@ -1441,10 +1388,23 @@
             ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
         }
 
+        /* Повторная накладка оригинальных черных контуров поверх рисунка */
+        function redrawContours() {
+            if (!originalImageObj) return;
+            ctx.save();
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.globalAlpha = 1.0;
+            ctx.drawImage(originalImageObj, 0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+
         function setTool(tool) {
             currentTool = tool;
-            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + tool).classList.add('active');
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                if (btn.id) btn.classList.remove('active');
+            });
+            const activeBtn = document.getElementById('btn-' + tool);
+            if (activeBtn) activeBtn.classList.add('active');
         }
 
         function setColor(hex, elem) {
@@ -1459,6 +1419,24 @@
         function updateToolSettings() {
             brushSize = parseInt(document.getElementById('tool-size').value);
             brushOpacity = parseFloat(document.getElementById('tool-opacity').value);
+        }
+
+        /* Изменение масштаба */
+        function changeZoom(delta) {
+            currentZoom = Math.max(0.6, Math.min(2.5, currentZoom + delta));
+            applyZoom();
+        }
+
+        function resetZoom() {
+            currentZoom = 1;
+            applyZoom();
+        }
+
+        function applyZoom() {
+            const wrapper = document.getElementById('canvas-wrapper');
+            if (wrapper) {
+                wrapper.style.transform = `scale(${currentZoom})`;
+            }
         }
 
         function getCanvasCoords(e) {
@@ -1477,6 +1455,7 @@
 
             if (currentTool === 'fill') {
                 floodFill(coords.x, coords.y, currentColor);
+                redrawContours(); // Сохраняем контуры после заливки
             } else {
                 ctx.beginPath();
                 ctx.moveTo(coords.x, coords.y);
@@ -1494,9 +1473,10 @@
             if (currentTool === 'eraser') {
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.strokeStyle = '#ffffff';
-                ctx.globalAlpha = brushOpacity;
+                ctx.globalAlpha = 1.0;
             } else {
-                ctx.globalCompositeOperation = 'source-over';
+                // Использование multiply предотвращает закрашивание контуров
+                ctx.globalCompositeOperation = 'multiply';
                 ctx.strokeStyle = currentColor;
                 ctx.globalAlpha = brushOpacity;
             }
@@ -1506,12 +1486,15 @@
         }
 
         function stopDraw() {
-            isDrawing = false;
-            ctx.beginPath();
-            ctx.globalAlpha = 1.0;
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.beginPath();
+                ctx.globalAlpha = 1.0;
+                redrawContours(); // Восстанавливаем черные линии после завершения штриха
+            }
         }
 
-        /* Алгоритм Заливки (Flood Fill) */
+        /* Flood Fill */
         function floodFill(startX, startY, fillHex) {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
@@ -1563,9 +1546,27 @@
             return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
         }
 
+        /* Эффект конфетти при успешном завершении */
+        function triggerVictoryEffect() {
+            const modalBody = document.querySelector('.game-modal-body');
+            const colors = ['#f0c543', '#cc6244', '#486a47', '#2ecc71', '#3498db', '#9b59b6'];
+
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-particle';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (1.8 + Math.random() * 1.5) + 's';
+
+                modalBody.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
         function saveCanvas() {
             const link = document.createElement('a');
-            link.download = 'my-artlistprint-coloring.jpg';
+            link.download = 'my-artlistprint-game.jpg';
             link.href = canvas.toDataURL('image/jpeg', 0.9);
             link.click();
         }
