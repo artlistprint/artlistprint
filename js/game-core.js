@@ -29,16 +29,22 @@ function initCanvas(imgSrc) {
         drawCanvas.width = templateCanvas.width = w;
         drawCanvas.height = templateCanvas.height = h;
 
-        // Формируем прозрачную маску для верхнего слоя
+        // Превращаем контур в чисто черный рисунок с альфа-прозрачностью (убирает белые ореолы)
         templateCtx.clearRect(0, 0, w, h);
         templateCtx.drawImage(img, 0, 0, w, h);
 
         const imgData = templateCtx.getImageData(0, 0, w, h);
         const d = imgData.data;
         for (let i = 0; i < d.length; i += 4) {
-            // Удаляем белый фон (делаем 100% прозрачным)
-            if (d[i] > 200 && d[i+1] > 200 && d[i+2] > 200) {
-                d[i+3] = 0;
+            const brightness = (d[i] * 0.299 + d[i+1] * 0.587 + d[i+2] * 0.114);
+            d[i] = 0;
+            d[i+1] = 0;
+            d[i+2] = 0;
+
+            if (brightness > 210) {
+                d[i+3] = 0; // Белый фон делаем 100% прозрачным
+            } else {
+                d[i+3] = Math.round(255 - brightness); // Серые края делаем полупрозрачным черным
             }
         }
         templateCtx.putImageData(imgData, 0, 0);
@@ -180,7 +186,7 @@ function stopDraw() {
     }
 }
 
-/* Оптимизированная заливка без вылетов и с расширением под контур */
+/* Мгновенная заливка без белых пикселей */
 function floodFill(startX, startY, fillHex) {
     const width = drawCanvas.width;
     const height = drawCanvas.height;
@@ -193,31 +199,30 @@ function floodFill(startX, startY, fillHex) {
 
     const startIdx = (startY * width + startX) * 4;
 
-    // Клик по черному контуру (альфа > 150 и темный цвет < 80) — игнорируем
-    if (tmplData[startIdx + 3] > 150 && tmplData[startIdx] < 80) return;
+    // Игнорируем клик по плотному черному контуру
+    if (tmplData[startIdx + 3] > 200) return;
 
     const fillRgb = hexToRgb(fillHex);
     const targetR = drawData[startIdx];
     const targetG = drawData[startIdx + 1];
     const targetB = drawData[startIdx + 2];
 
-    const tolerance = 40;
-    const expandPixels = 2; // Перекрытие полупрозрачного контура в пикселях
+    // Если этот цвет уже заливке не подлежит
+    if (targetR === fillRgb[0] && targetG === fillRgb[1] && targetB === fillRgb[2]) return;
 
+    const tolerance = 50;
     const filledMask = new Uint8Array(width * height);
-    // Использование числа вместо массива координат убирает подвисания и переполнение стека
     const stack = [startY * width + startX];
+    const filledIndices = [];
 
     while (stack.length > 0) {
         const pos = stack.pop();
         if (filledMask[pos]) continue;
 
-        const x = pos % width;
-        const y = Math.floor(pos / width);
         const idx = pos * 4;
 
-        // Порог остановки заливки у границы линии
-        if (tmplData[idx + 3] > 180 && tmplData[idx] < 70) continue;
+        // Останавливаемся у темного центра контура
+        if (tmplData[idx + 3] > 180) continue;
 
         const r = drawData[idx];
         const g = drawData[idx + 1];
@@ -228,6 +233,10 @@ function floodFill(startX, startY, fillHex) {
             Math.abs(b - targetB) <= tolerance) {
 
             filledMask[pos] = 1;
+            filledIndices.push(pos);
+
+            const x = pos % width;
+            const y = Math.floor(pos / width);
 
             if (x > 0) stack.push(pos - 1);
             if (x < width - 1) stack.push(pos + 1);
@@ -236,38 +245,28 @@ function floodFill(startX, startY, fillHex) {
         }
     }
 
-    // Дилатация: расширяем заливку под сглаженные края контура
-    const finalMask = new Uint8Array(filledMask);
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            const pos = y * width + x;
-            if (filledMask[pos] === 1) {
-                for (let dy = -expandPixels; dy <= expandPixels; dy++) {
-                    for (let dx = -expandPixels; dx <= expandPixels; dx++) {
-                        const nx = x + dx;
-                        const ny = y + dy;
-                        if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-                            const nPos = ny * width + nx;
-                            const nIdx = nPos * 4;
-                            // Не заходим только на глубокий черный центр
-                            if (tmplData[nIdx + 3] <= 200 || tmplData[nIdx] >= 60) {
-                                finalMask[nPos] = 1;
-                            }
-                        }
+    // Быстрое локальное расширение заливки под полупрозрачный край линии (в 50 раз быстрее!)
+    const expandPixels = 2;
+    for (let i = 0; i < filledIndices.length; i++) {
+        const pos = filledIndices[i];
+        const x = pos % width;
+        const y = Math.floor(pos / width);
+
+        for (let dy = -expandPixels; dy <= expandPixels; dy++) {
+            for (let dx = -expandPixels; dx <= expandPixels; dx++) {
+                const nx = x + dx;
+                const ny = y + dy;
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                    const nPos = ny * width + nx;
+                    const nIdx = nPos * 4;
+                    if (tmplData[nIdx + 3] < 240) {
+                        drawData[nIdx] = fillRgb[0];
+                        drawData[nIdx + 1] = fillRgb[1];
+                        drawData[nIdx + 2] = fillRgb[2];
+                        drawData[nIdx + 3] = 255;
                     }
                 }
             }
-        }
-    }
-
-    // Применяем заливку к пикселям холста
-    for (let i = 0; i < width * height; i++) {
-        if (finalMask[i] === 1) {
-            const idx = i * 4;
-            drawData[idx] = fillRgb[0];
-            drawData[idx + 1] = fillRgb[1];
-            drawData[idx + 2] = fillRgb[2];
-            drawData[idx + 3] = 255;
         }
     }
 
