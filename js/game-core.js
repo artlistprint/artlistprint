@@ -12,6 +12,10 @@ let zoomScale = 1;
 let panX = 0, panY = 0;
 let isPanning = false, startPanX = 0, startPanY = 0;
 
+// Сенсорные жест
+let initialPinchDistance = 0;
+let initialZoomScale = 1;
+
 function initCanvas(imgSrc) {
     drawCanvas = document.getElementById('drawing-canvas');
     drawCtx = drawCanvas.getContext('2d', { willReadFrequently: true });
@@ -29,7 +33,7 @@ function initCanvas(imgSrc) {
         drawCanvas.width = templateCanvas.width = w;
         drawCanvas.height = templateCanvas.height = h;
 
-        // Превращаем контур в чисто черный рисунок с альфа-прозрачностью (убирает белые ореолы)
+        // Превращаем контур в чисто черный рисунок с альфа-прозрачностью
         templateCtx.clearRect(0, 0, w, h);
         templateCtx.drawImage(img, 0, 0, w, h);
 
@@ -42,9 +46,9 @@ function initCanvas(imgSrc) {
             d[i+2] = 0;
 
             if (brightness > 210) {
-                d[i+3] = 0; // Белый фон делаем 100% прозрачным
+                d[i+3] = 0; // Белый фон делаем прозрачным
             } else {
-                d[i+3] = Math.round(255 - brightness); // Серые края делаем полупрозрачным черным
+                d[i+3] = Math.round(255 - brightness); // Серые края делаем полупрозрачными
             }
         }
         templateCtx.putImageData(imgData, 0, 0);
@@ -90,13 +94,16 @@ function updateToolSettings() {
     brushOpacity = parseFloat(document.getElementById('tool-opacity').value);
 }
 
-/* Привязчик событий */
+/* Привязчик событий (Мышь + Touch) */
 function bindEvents() {
     const container = document.getElementById('canvas-container');
 
+    // --- МЫШЬ ---
     container.onmousedown = (e) => {
         if (currentTool === 'pan') {
-            isPanning = true; startPanX = e.clientX - panX; startPanY = e.clientY - panY;
+            isPanning = true; 
+            startPanX = e.clientX - panX; 
+            startPanY = e.clientY - panY;
             container.style.cursor = 'grabbing';
         } else {
             startDraw(e);
@@ -105,7 +112,8 @@ function bindEvents() {
 
     container.onmousemove = (e) => {
         if (isPanning) {
-            panX = e.clientX - startPanX; panY = e.clientY - startPanY;
+            panX = e.clientX - startPanX; 
+            panY = e.clientY - startPanY;
             applyTransform();
         } else {
             draw(e);
@@ -118,13 +126,66 @@ function bindEvents() {
         stopDraw();
     };
 
-    // Zoom колесиком
     container.onwheel = (e) => {
         e.preventDefault();
         const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
-        zoomScale = Math.max(0.5, Math.min(3.0, zoomScale * zoomFactor));
+        zoomScale = Math.max(0.5, Math.min(4.0, zoomScale * zoomFactor));
         applyTransform();
     };
+
+    // --- СЕНСОРНЫЕ ЭКРАНЫ ---
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            if (currentTool === 'pan') {
+                isPanning = true;
+                startPanX = touch.clientX - panX;
+                startPanY = touch.clientY - panY;
+            } else {
+                startDraw(touch);
+            }
+        } else if (e.touches.length === 2) {
+            isPanning = false;
+            stopDraw();
+            initialPinchDistance = getTouchDistance(e.touches);
+            initialZoomScale = zoomScale;
+        }
+    }, { passive: false });
+
+    container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            if (isPanning) {
+                panX = touch.clientX - startPanX;
+                panY = touch.clientY - startPanY;
+                applyTransform();
+            } else {
+                draw(touch);
+            }
+        } else if (e.touches.length === 2) {
+            e.preventDefault();
+            const currentDist = getTouchDistance(e.touches);
+            if (initialPinchDistance > 0) {
+                const scale = currentDist / initialPinchDistance;
+                zoomScale = Math.max(0.5, Math.min(4.0, initialZoomScale * scale));
+                applyTransform();
+            }
+        }
+    }, { passive: false });
+
+    container.addEventListener('touchend', (e) => {
+        if (e.touches.length < 2) initialPinchDistance = 0;
+        if (e.touches.length === 0) {
+            isPanning = false;
+            stopDraw();
+        }
+    });
+}
+
+function getTouchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.hypot(dx, dy);
 }
 
 function applyTransform() {
@@ -186,7 +247,6 @@ function stopDraw() {
     }
 }
 
-/* Мгновенная заливка без белых пикселей */
 function floodFill(startX, startY, fillHex) {
     const width = drawCanvas.width;
     const height = drawCanvas.height;
@@ -199,7 +259,6 @@ function floodFill(startX, startY, fillHex) {
 
     const startIdx = (startY * width + startX) * 4;
 
-    // Игнорируем клик по плотному черному контуру
     if (tmplData[startIdx + 3] > 200) return;
 
     const fillRgb = hexToRgb(fillHex);
@@ -207,7 +266,6 @@ function floodFill(startX, startY, fillHex) {
     const targetG = drawData[startIdx + 1];
     const targetB = drawData[startIdx + 2];
 
-    // Если этот цвет уже заливке не подлежит
     if (targetR === fillRgb[0] && targetG === fillRgb[1] && targetB === fillRgb[2]) return;
 
     const tolerance = 50;
@@ -220,8 +278,6 @@ function floodFill(startX, startY, fillHex) {
         if (filledMask[pos]) continue;
 
         const idx = pos * 4;
-
-        // Останавливаемся у темного центра контура
         if (tmplData[idx + 3] > 180) continue;
 
         const r = drawData[idx];
@@ -245,7 +301,6 @@ function floodFill(startX, startY, fillHex) {
         }
     }
 
-    // Быстрое локальное расширение заливки под полупрозрачный край линии (в 50 раз быстрее!)
     const expandPixels = 2;
     for (let i = 0; i < filledIndices.length; i++) {
         const pos = filledIndices[i];
@@ -278,7 +333,6 @@ function hexToRgb(hex) {
     return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
 }
 
-/* Экспорт без потери качества */
 function saveCanvas() {
     const exportCanvas = document.createElement('canvas');
     exportCanvas.width = drawCanvas.width;
