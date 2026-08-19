@@ -180,7 +180,7 @@ function stopDraw() {
     }
 }
 
-/* Flood Fill c заведением цвета под темно-серый контур (Threshold Bleed) */
+/* Оптимизированная заливка без вылетов и с расширением под контур */
 function floodFill(startX, startY, fillHex) {
     const width = drawCanvas.width;
     const height = drawCanvas.height;
@@ -193,49 +193,85 @@ function floodFill(startX, startY, fillHex) {
 
     const startIdx = (startY * width + startX) * 4;
 
-    // Клик по основному темному контуру (альфа-канал > 200 и яркость < 80)
-    if (tmplData[startIdx + 3] > 200 && tmplData[startIdx] < 80) return;
+    // Клик по черному контуру (альфа > 150 и темный цвет < 80) — игнорируем
+    if (tmplData[startIdx + 3] > 150 && tmplData[startIdx] < 80) return;
 
     const fillRgb = hexToRgb(fillHex);
-    const targetColor = [drawData[startIdx], drawData[startIdx+1], drawData[startIdx+2]];
+    const targetR = drawData[startIdx];
+    const targetG = drawData[startIdx + 1];
+    const targetB = drawData[startIdx + 2];
 
-    const queue = [[startX, startY]];
-    const visited = new Uint8Array(width * height);
+    const tolerance = 40;
+    const expandPixels = 2; // Перекрытие полупрозрачного контура в пикселях
 
-    while (queue.length > 0) {
-        const [x, y] = queue.pop();
-        if (x < 0 || x >= width || y < 0 || y >= height) continue;
+    const filledMask = new Uint8Array(width * height);
+    // Использование числа вместо массива координат убирает подвисания и переполнение стека
+    const stack = [startY * width + startX];
 
-        const pos = y * width + x;
-        if (visited[pos]) continue;
-        visited[pos] = 1;
+    while (stack.length > 0) {
+        const pos = stack.pop();
+        if (filledMask[pos]) continue;
 
+        const x = pos % width;
+        const y = Math.floor(pos / width);
         const idx = pos * 4;
 
-        // Порог остановки заливки: заходим под сглаженную границу до самых темных пикселей (RGB < 70)
+        // Порог остановки заливки у границы линии
         if (tmplData[idx + 3] > 180 && tmplData[idx] < 70) continue;
 
-        const currColor = [drawData[idx], drawData[idx+1], drawData[idx+2]];
-        if (colorMatch(currColor, targetColor, 40)) {
-            drawData[idx] = fillRgb[0];
-            drawData[idx+1] = fillRgb[1];
-            drawData[idx+2] = fillRgb[2];
-            drawData[idx+3] = 255;
+        const r = drawData[idx];
+        const g = drawData[idx + 1];
+        const b = drawData[idx + 2];
 
-            queue.push([x + 1, y]);
-            queue.push([x - 1, y]);
-            queue.push([x, y + 1]);
-            queue.push([x, y - 1]);
+        if (Math.abs(r - targetR) <= tolerance &&
+            Math.abs(g - targetG) <= tolerance &&
+            Math.abs(b - targetB) <= tolerance) {
+
+            filledMask[pos] = 1;
+
+            if (x > 0) stack.push(pos - 1);
+            if (x < width - 1) stack.push(pos + 1);
+            if (y > 0) stack.push(pos - width);
+            if (y < height - 1) stack.push(pos + width);
+        }
+    }
+
+    // Дилатация: расширяем заливку под сглаженные края контура
+    const finalMask = new Uint8Array(filledMask);
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const pos = y * width + x;
+            if (filledMask[pos] === 1) {
+                for (let dy = -expandPixels; dy <= expandPixels; dy++) {
+                    for (let dx = -expandPixels; dx <= expandPixels; dx++) {
+                        const nx = x + dx;
+                        const ny = y + dy;
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                            const nPos = ny * width + nx;
+                            const nIdx = nPos * 4;
+                            // Не заходим только на глубокий черный центр
+                            if (tmplData[nIdx + 3] <= 200 || tmplData[nIdx] >= 60) {
+                                finalMask[nPos] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Применяем заливку к пикселям холста
+    for (let i = 0; i < width * height; i++) {
+        if (finalMask[i] === 1) {
+            const idx = i * 4;
+            drawData[idx] = fillRgb[0];
+            drawData[idx + 1] = fillRgb[1];
+            drawData[idx + 2] = fillRgb[2];
+            drawData[idx + 3] = 255;
         }
     }
 
     drawCtx.putImageData(drawImgData, 0, 0);
-}
-
-function colorMatch(c1, c2, threshold = 30) {
-    return Math.abs(c1[0] - c2[0]) < threshold &&
-           Math.abs(c1[1] - c2[1]) < threshold &&
-           Math.abs(c1[2] - c2[2]) < threshold;
 }
 
 function hexToRgb(hex) {
