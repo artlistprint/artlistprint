@@ -1,0 +1,101 @@
+@font-face {
+    font-family: 'Magnolia Script';
+    src: url('../fonts/Magnolia.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg-paper: #f8f5ee;
+    --primary-sage: #486a47;
+    --primary-sage-hover: #365235;
+    --accent-terracotta: #cc6244;
+    --accent-yellow: #f0c543;
+    --text-main: #333d32;
+    --text-muted: #6b756a;
+    --card-bg: #ffffff;
+    --border-soft: #e5dfd3;
+    --shadow-soft: 0 8px 24px rgba(72, 106, 71, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Comfortaa', cursive, sans-serif;
+    background-color: var(--bg-paper);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-bottom: 60px;
+}
+
+.container { max-width: 1380px; margin: 0 auto; padding: 0 20px; display: flex; flex-direction: column; }
+
+header {
+    text-align: center;
+    padding: 35px 20px 25px;
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+.site-title { font-family: 'Magnolia Script', 'Caveat', cursive; font-size: 4rem; }
+.title-artlist { color: var(--primary-sage); }
+.title-print { color: var(--accent-terracotta); }
+.title-domain { font-size: 2.2rem; color: var(--text-muted); font-family: 'Comfortaa', sans-serif; }
+
+.search-container { margin-bottom: 20px; position: relative; width: 100%; }
+.search-input {
+    width: 100%; padding: 14px 20px 14px 48px;
+    font-family: 'Nunito', sans-serif; font-size: 1rem;
+    border: 2px solid var(--border-soft); border-radius: 14px;
+    outline: none; transition: all 0.2s ease;
+}
+.search-input:focus { border-color: var(--primary-sage); }
+.search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; fill: var(--text-muted); }
+
+.main-layout { display: grid; grid-template-columns: 240px 1fr; gap: 30px; align-items: start; }
+.sidebar { background: var(--card-bg); padding: 22px 16px; border-radius: 18px; border: 1px solid var(--border-soft); position: sticky; top: 20px; }
+
+.game-launch-btn {
+    width: 100%; padding: 12px 14px; margin-bottom: 20px;
+    background: linear-gradient(135deg, #cc6244 0%, #e67e22 100%);
+    color: #ffffff; border: none; border-radius: 14px;
+    font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 6px 18px rgba(204, 98, 68, 0.3);
+}
+
+.filter-group { margin-bottom: 25px; }
+.filter-title { font-size: 0.8rem; font-weight: 700; color: var(--primary-sage); text-transform: uppercase; margin-bottom: 12px; }
+.filter-btn {
+    display: block; width: 100%; text-align: left; padding: 9px 12px; margin-bottom: 4px;
+    background: transparent; border: 1px solid transparent; border-radius: 10px;
+    font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.filter-btn.active { background-color: var(--primary-sage); color: #ffffff; }
+
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border-soft); overflow: hidden; display: flex; flex-direction: column; }
+.card-image-wrapper { position: relative; padding-top: 135%; background: #f3efe6; cursor: pointer; }
+.card-image { position: absolute; inset: 10px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+.card-title { font-size: 1.05rem; margin-bottom: 6px; font-weight: 700; }
+.card-desc { font-family: 'Nunito', sans-serif; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; flex-grow: 1; }
+.card-actions { display: flex; gap: 8px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 10px; text-decoration: none; font-family: 'Nunito', sans-serif; }
+.btn-pdf { flex: 1.2; background-color: var(--primary-sage); color: #ffffff; }
+.btn-jpg { flex: 0.8; border: 1px solid var(--border-soft); color: var(--text-main); }
+
+.modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(30, 35, 30, 0.85); justify-content: center; align-items: center; padding: 20px; }
+.modal-content { max-width: 90vw; max-height: 90vh; border-radius: 12px; background: #fff; }
+.modal-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 36px; cursor: pointer; }
+
+#cookie-banner { display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; max-width: 500px; margin: 0 auto; background: #fff; border: 1px solid var(--border-soft); border-radius: 16px; padding: 16px 20px; z-index: 9999; align-items: center; justify-content: space-between; gap: 15px; font-family: 'Nunito', sans-serif; }
+#cookie-banner button { background: var(--primary-sage); color: #fff; border: none; padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+
+@media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 850px) { .main-layout { grid-template-columns: 1fr; } .sidebar { position: static; } }

@@ -1,0 +1,42 @@
+.game-modal-body {
+    background: #fcfbf7;
+    width: 100vw; height: 100vh;
+    max-width: 100%; max-height: 100%;
+    border-radius: 0; display: flex; flex-direction: column;
+    position: fixed; inset: 0; z-index: 2500;
+}
+
+.game-header { padding: 12px 20px; background: #ffffff; border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; }
+.game-header h2 { font-size: 1.2rem; color: var(--primary-sage); font-weight: 700; }
+.game-close-btn { background: var(--bg-paper); border: 1px solid var(--border-soft); width: 36px; height: 36px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; }
+
+.game-selection-view { padding: 20px; overflow-y: auto; flex-grow: 1; }
+.game-filter-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+.game-tab-btn { padding: 8px 16px; border-radius: 12px; border: 1px solid var(--border-soft); background: #fff; cursor: pointer; font-family: 'Nunito', sans-serif; font-weight: 700; }
+.game-tab-btn.active { background: var(--primary-sage); color: #fff; }
+
+.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+.game-item-card { background: #ffffff; border: 1.5px solid var(--border-soft); border-radius: 16px; padding: 10px; text-align: center; cursor: pointer; }
+.game-item-card img { width: 100%; height: 130px; object-fit: contain; border-radius: 10px; margin-bottom: 8px; }
+
+.game-editor-view { display: none; flex-direction: column; height: 100%; overflow: hidden; flex-grow: 1; }
+.game-toolbar { background: #ffffff; border-bottom: 1px solid var(--border-soft); padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+
+.tool-group { display: flex; align-items: center; gap: 6px; }
+.tool-btn { padding: 7px 12px; border-radius: 10px; border: 1px solid var(--border-soft); background: var(--bg-paper); font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.tool-btn.active { background: var(--primary-sage); color: #fff; }
+
+.tool-slider { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-family: 'Nunito', sans-serif; background: var(--bg-paper); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--border-soft); }
+.tool-slider input[type="range"] { width: 65px; accent-color: var(--primary-sage); }
+
+.color-palette { display: flex; align-items: center; gap: 6px; background: var(--bg-paper); padding: 4px 8px; border-radius: 12px; border: 1px solid var(--border-soft); }
+.color-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #ddd; cursor: pointer; }
+.color-swatch.active { transform: scale(1.2); box-shadow: 0 0 0 2px var(--accent-terracotta); }
+#custom-color { width: 26px; height: 26px; border: none; background: none; cursor: pointer; }
+
+.canvas-container { flex-grow: 1; position: relative; background: #f2efe9; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: none; }
+.canvas-wrapper { position: relative; transform-origin: center center; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border-radius: 12px; background: #ffffff; }
+.canvas-wrapper canvas { display: block; max-width: 100%; max-height: 80vh; object-fit: contain; }
+
+#drawing-canvas { position: absolute; top: 0; left: 0; z-index: 1; cursor: crosshair; }
+#template-canvas { position: relative; z-index: 2; pointer-events: none; }
